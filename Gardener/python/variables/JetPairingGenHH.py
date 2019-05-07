@@ -92,13 +92,7 @@ class JetPairingGenHH(TreeCloner):
             
             
             #find the W jets
-            if len(partons) >= 4: # and len(hpair) == 2:
-                if self.mode == 0:
-                    wpair = utils.nearest_mass_pair_notH(jets, 80.385, hpair)
-                elif self.mode == 1:
-                    wpair = utils.max_pt_pair_notH(jets, hpair)   
-                elif self.mode == 2:
-                    wpair = utils.min_deltaeta_pairs_notH(jets, hpair)
+            wpair = [ip for ip in range(4) if not ip in hpair]
              
             # now associate partons and nearest jets
             jets = utils.get_jets(itree, self.debug)
