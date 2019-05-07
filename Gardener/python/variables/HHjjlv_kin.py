@@ -136,22 +136,22 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     N_jets_central = 0
     Ht = 0.
     for j_eta, j_pt in zip(other_jets_eta, other_jets_pts):
-        # Looking only to jets != b-jets & wjets
-        Z = abs((j_eta - mean_eta_b)/ deltaeta_b)
-        Njets += 1
-        if Z > 0.5:
-            N_jets_forward += 1
-        else:
-            N_jets_central += 1
-        # Ht totale
+#        # Looking only to jets != b-jets & wjets
+#        Z = abs((j_eta - mean_eta_b)/ deltaeta_b)
+#        Njets += 1
+#        if Z > 0.5:
+#            N_jets_forward += 1
+#        else:
+#            N_jets_central += 1
+        # Ht total
         Ht += j_pt
     # Add b-jets and w-jet to Ht
     for jet in chain(bjets, wjets):
         Ht += jet.Pt()
             
     output["N_jets"] = Njets 
-    output["N_jets_central"] = N_jets_central
-    output["N_jets_forward"] = N_jets_forward
+#    output["N_jets_central"] = N_jets_central
+#    output["N_jets_forward"] = N_jets_forward
     output["Ht"] = Ht
 
     return output
