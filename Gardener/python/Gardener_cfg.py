@@ -5275,7 +5275,7 @@ Steps= {
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : False,
-                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 20.0 --bWP M -m 0'
+                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 20.0 '
   },
 
 

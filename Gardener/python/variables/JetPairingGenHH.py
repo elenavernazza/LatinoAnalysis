@@ -37,7 +37,6 @@ class JetPairingGenHH(TreeCloner):
         group.add_option('-d', '--debug',  dest='debug',  help='Debug flag',  default="0")
         group.add_option('--radius',  dest='radius',  help='Radius for jet-parton association',  default=1.)
         group.add_option('--ptminjet',  dest='ptmin_jet',  help='Min Pt for jets',  default=20.)
-        group.add_option('-m', '--mode',  dest='mode',  help='Pairing mode, 0=nearest W mas, 1=max_pt, 2=mindeltaeta',  default="0")
         parser.add_option_group(group)
         return group
 
