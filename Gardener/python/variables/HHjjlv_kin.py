@@ -1,3 +1,20 @@
+module_name =    ''' 
+
+ _    _ _    _ _  _ _       _    _       
+| |  | | |  | (_)(_) |     | |  (_)      
+| |__| | |__| |_  _| |_   _| | ___ _ __  
+|  __  |  __  | || | \ \ / / |/ / | '_ \ 
+| |  | | |  | | || | |\ V /|   <| | | | |
+|_|  |_|_|  |_| || |_| \_/ |_|\_\_|_| |_|
+             _/ |/ |                     
+            |__/__/                      
+         
+
+
+'''
+
+
+
 import optparse
 import numpy
 import ROOT
@@ -150,7 +167,7 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     for jet in chain(bjets, wjets):
         Ht += jet.Pt()
             
-    output["N_jets"] = Njets 
+#    output["N_jets"] = Njets 
 #    output["N_jets_central"] = N_jets_central
 #    output["N_jets_forward"] = N_jets_forward
     output["Ht"] = Ht
@@ -218,7 +235,7 @@ class HHjjlnu_kin(TreeCloner):
                 print i,'events processed :: ', nentries
 
             # Check if we have at least 4 jets with pt > ptmin
-            # and VBSjets and Vjets are all associated
+            # and Hjets and Wjets are all associated
             if (not itree.std_vector_jet_pt[3] >= self.ptmin_jet) or  \
                 -1 in itree.H_jets or -1 in itree.W_jets:
                 for var in variables:
@@ -246,8 +263,8 @@ class HHjjlnu_kin(TreeCloner):
                         other_jets_eta.append(eta)
                         other_jets_pts.append(pt)
     
-                output =  getVBSkinematics(bjets, wjets, lepton, met, 
-                                            other_jets_eta, other_jets_pts, self.debug)
+                output =  getHHkinematics(bjets, wjets, lepton, met, 
+                                           other_jets_eta, other_jets_pts, self.debug)
 
                 if self.debug:
                     print output

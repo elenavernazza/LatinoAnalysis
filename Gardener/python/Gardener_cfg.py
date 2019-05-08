@@ -5293,6 +5293,13 @@ Steps= {
                   'command'    : 'gardener.py VBSjjlnu_kin --ptminjet 20.0'
   },
 
+   'HHjjlnu_kin' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py HHjjlv_kin --ptminjet 20.0'
+  },
+
   'gr4JetsSkim' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
