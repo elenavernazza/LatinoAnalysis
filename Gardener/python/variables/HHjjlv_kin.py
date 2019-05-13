@@ -48,8 +48,7 @@ hh_branches = {
                 "Rwjets_high", "Rwjets_low",
                 "A_b", "A_wjet",  
                 "L_p", "L_pw", "Ht",
-                ],
-#            "I": ["N_jets", "N_jets_forward", "N_jets_central"]
+                ]
             }
 
 
@@ -213,11 +212,7 @@ class HHjjlnu_kin(TreeCloner):
 
         for br in hh_branches["F"]:
             variables[br] = numpy.zeros(1, dtype=numpy.float32)
-            self.otree.Branch(br, variables[br], "{}/F".format(br))
-#        for br in hh_branches["I"]:
-#            variables[br] = numpy.zeros(1, dtype=numpy.int32)
-#            self.otree.Branch(br, variables[br], "{}/I".format(br))
-       
+            self.otree.Branch(br, variables[br], "{}/F".format(br))       
 
         nentries = self.itree.GetEntries()
         print 'Total number of entries: ',nentries 
