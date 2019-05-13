@@ -47,8 +47,7 @@ hh_branches = {
                 "deltaR_b", "deltaR_wjet",
                 "Rwjets_high", "Rwjets_low",
                 "A_b", "A_wjet",  
-                "L_p", "L_pw", "Ht",
-                ]
+                "L_p", "L_pw", "Ht"]
             }
 
 
