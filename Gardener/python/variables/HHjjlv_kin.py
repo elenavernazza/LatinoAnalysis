@@ -46,11 +46,8 @@ hh_branches = {
                 "deltaR_lep_b", "deltaR_lep_wjet",                
                 "deltaR_b", "deltaR_wjet",
                 "Rwjets_high", "Rwjets_low",
-                "A_b", "A_wjet", "Mw_lep", "w_lep_pt", 
-                "Mww", "R_ww", "R_mw", "A_ww",
-                "C_b", "C_ww", "L_p", "L_pw", "Ht",
-                ],
-#            "I": ["N_jets", "N_jets_forward", "N_jets_central"]
+                "A_b", "A_wjet",  
+                "L_p", "L_pw", "Ht"]
             }
 
 
@@ -135,7 +132,7 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     #R variables
     pt_b_12  = bjets[0].Pt() * bjets[1].Pt() 
     output["Rwjets_high"] = (lepton.Pt() * wjets[0].Pt()) / pt_b_12
-    output["Rvjets_low"] = (lepton.Pt() * wjets[1].Pt()) / pt_b_12
+    output["Rwjets_low"] = (lepton.Pt() * wjets[1].Pt()) / pt_b_12
 
     #Asymmetry
     output["A_b"]  = (b_pts[0] - b_pts[1]) / sum(b_pts)
@@ -214,11 +211,7 @@ class HHjjlnu_kin(TreeCloner):
 
         for br in hh_branches["F"]:
             variables[br] = numpy.zeros(1, dtype=numpy.float32)
-            self.otree.Branch(br, variables[br], "{}/F".format(br))
-#        for br in hh_branches["I"]:
-#            variables[br] = numpy.zeros(1, dtype=numpy.int32)
-#            self.otree.Branch(br, variables[br], "{}/I".format(br))
-       
+            self.otree.Branch(br, variables[br], "{}/F".format(br))       
 
         nentries = self.itree.GetEntries()
         print 'Total number of entries: ',nentries 
