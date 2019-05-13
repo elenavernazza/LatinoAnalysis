@@ -1,3 +1,20 @@
+module_name =    ''' 
+
+ _    _ _    _ _  _ _       _    _       
+| |  | | |  | (_)(_) |     | |  (_)      
+| |__| | |__| |_  _| |_   _| | ___ _ __  
+|  __  |  __  | || | \ \ / / |/ / | '_ \ 
+| |  | | |  | | || | |\ V /|   <| | | | |
+|_|  |_|_|  |_| || |_| \_/ |_|\_\_|_| |_|
+             _/ |/ |                     
+            |__/__/                      
+         
+
+
+'''
+
+
+
 import optparse
 import numpy
 import ROOT
@@ -22,17 +39,18 @@ hh_branches = {
                 "deltaeta_lep_b_high", "deltaeta_lep_b_low", 
                 "deltaphi_lep_wjet_high", "deltaphi_lep_wjet_low",
                 "deltaeta_lep_wjet_high", "deltaeta_lep_wjet_low",
-                "deltaR_lep_b", "deltaR_lep_wjet",
-                "deltaphi_lep_nu", "deltaeta_lep_nu",
-                "deltaR_lep_nu", "deltaR_b", "deltaR_wjet",
+                "deltaphi_met_b_high", "deltaphi_met_b_low",
+                "deltaphi_met_wjet_high", "deltaphi_met_wjet_low",
+                "deltaeta_met_b_high", "deltaeta_met_b_low",
+                "deltaeta_met_wjet_high", "deltaeta_met_wjet_low",
+                "deltaR_lep_b", "deltaR_lep_wjet",                
+                "deltaR_b", "deltaR_wjet",
                 "Rwjets_high", "Rwjets_low",
-                "Zwjets_high", "Zwjets_low", "Zlep",
                 "A_b", "A_wjet", "Mw_lep", "w_lep_pt", 
                 "Mww", "R_ww", "R_mw", "A_ww",
                 "C_b", "C_ww", "L_p", "L_pw", "Ht",
-                "recoMET", "recoMET_pz"          
                 ],
-            "I": ["N_jets", "N_jets_forward", "N_jets_central"]
+#            "I": ["N_jets", "N_jets_forward", "N_jets_central"]
             }
 
 
@@ -76,9 +94,9 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     if debug:
         print "Wjet pts", wjet_pts
         print "Wjet etas", wjet_etas
-    output["Wjet_pt_high"] = wjet_pts[0]
-    output["Wjet_pt_low"] = wjet_pts[1]
-    output["mjj_Wjet"] = total_wjet.M()
+    output["wjet_pt_high"] = wjet_pts[0]
+    output["wjet_pt_low"] = wjet_pts[1]
+    output["mjj_wjet"] = total_wjet.M()
     output["deltaphi_wjet"] =  abs(wjets[0].DeltaPhi(wjets[1]))
     output["deltaeta_wjet"] = abs(wjet_etas[0] - wjet_etas[1])
     output["deltaR_wjet"] = wjets[0].DrEtaPhi(wjets[1])
@@ -101,7 +119,7 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     #Delta Phi with MET
     output["deltaphi_met_b_high"] = abs(met.DeltaPhi(bjets[0]))
     output["deltaphi_met_b_low"] = abs(met.DeltaPhi(bjets[1]))
-    output["deltaphi__wjet_high"] = abs(met.DeltaPhi(wjets[0]))
+    output["deltaphi_met_wjet_high"] = abs(met.DeltaPhi(wjets[0]))
     output["deltaphi_met_wjet_low"] = abs(met.DeltaPhi(wjets[1]))
  
     # Delta Eta with MET
@@ -136,22 +154,22 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     N_jets_central = 0
     Ht = 0.
     for j_eta, j_pt in zip(other_jets_eta, other_jets_pts):
-        # Looking only to jets != b-jets & wjets
-        Z = abs((j_eta - mean_eta_b)/ deltaeta_b)
-        Njets += 1
-        if Z > 0.5:
-            N_jets_forward += 1
-        else:
-            N_jets_central += 1
-        # Ht totale
+#        # Looking only to jets != b-jets & wjets
+#        Z = abs((j_eta - mean_eta_b)/ deltaeta_b)
+#        Njets += 1
+#        if Z > 0.5:
+#            N_jets_forward += 1
+#        else:
+#            N_jets_central += 1
+        # Ht total
         Ht += j_pt
     # Add b-jets and w-jet to Ht
     for jet in chain(bjets, wjets):
         Ht += jet.Pt()
             
-    output["N_jets"] = Njets 
-    output["N_jets_central"] = N_jets_central
-    output["N_jets_forward"] = N_jets_forward
+#    output["N_jets"] = Njets 
+#    output["N_jets_central"] = N_jets_central
+#    output["N_jets_forward"] = N_jets_forward
     output["Ht"] = Ht
 
     return output
@@ -192,14 +210,14 @@ class HHjjlnu_kin(TreeCloner):
         self.connect(tree,input)
 
         variables = {}
-        self.clone(output,  hh_branches["F"]+hh_branches["I"])
+        self.clone(output,  hh_branches["F"]) #+hh_branches["I"])
 
         for br in hh_branches["F"]:
             variables[br] = numpy.zeros(1, dtype=numpy.float32)
             self.otree.Branch(br, variables[br], "{}/F".format(br))
-        for br in hh_branches["I"]:
-            variables[br] = numpy.zeros(1, dtype=numpy.int32)
-            self.otree.Branch(br, variables[br], "{}/I".format(br))
+#        for br in hh_branches["I"]:
+#            variables[br] = numpy.zeros(1, dtype=numpy.int32)
+#            self.otree.Branch(br, variables[br], "{}/I".format(br))
        
 
         nentries = self.itree.GetEntries()
@@ -217,7 +235,7 @@ class HHjjlnu_kin(TreeCloner):
                 print i,'events processed :: ', nentries
 
             # Check if we have at least 4 jets with pt > ptmin
-            # and VBSjets and Vjets are all associated
+            # and Hjets and Wjets are all associated
             if (not itree.std_vector_jet_pt[3] >= self.ptmin_jet) or  \
                 -1 in itree.H_jets or -1 in itree.W_jets:
                 for var in variables:
@@ -245,8 +263,8 @@ class HHjjlnu_kin(TreeCloner):
                         other_jets_eta.append(eta)
                         other_jets_pts.append(pt)
     
-                output =  getVBSkinematics(bjets, wjets, lepton, met, 
-                                            other_jets_eta, other_jets_pts, self.debug)
+                output =  getHHkinematics(bjets, wjets, lepton, met, 
+                                           other_jets_eta, other_jets_pts, self.debug)
 
                 if self.debug:
                     print output
