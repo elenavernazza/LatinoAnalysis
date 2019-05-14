@@ -5237,21 +5237,21 @@ Steps= {
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['JetPairingVBS', 'VBSjjlnu_kin']
   },
 
   'resolvedVBSPairingGenAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingGenVBS','JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['JetPairingGenVBS','JetPairingVBS', 'VBSjjlnu_kin']
   },
 
   'JetPairingGenVBS' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : False,
-                  'command'    : 'gardener.py JetPairingGenVBS --radius 0.8 --ptminjet 20.0'
+                  'command'    : 'gardener.py JetPairingGenVBS --radius 0.8 --ptminjet 0.0'
   },
 
 
@@ -5271,11 +5271,18 @@ Steps= {
   },
 
 
+  'HHPairingAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['JetPairingHH','HHjjlnu_kin']
+  },
+
   'JetPairingGenHH' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : False,
-                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 20.0 '
+                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 0.0 '
   },
 
 

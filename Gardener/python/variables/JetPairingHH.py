@@ -90,12 +90,13 @@ class JetPairingHH(TreeCloner):
             bjets = [(i, bscore) for i, bscore in enumerate(b_scores)
                     if bscore >= bTaggingWPs['deepCSV'][self.bWP]]
 
-            print bjets
+            if self.debug:  print bjets
 
             if len(bjets) >= 2:
                 # Take the indexes of the two jets with bigger bscore
                 hpair = [j[0] for j in list(sorted(bjets, key=itemgetter(1), reverse=True))[:2]]
-                print hpair
+                
+                if self.debug:  print hpair
                 
                 if len(jets) >=4:
                     if self.mode == 0:

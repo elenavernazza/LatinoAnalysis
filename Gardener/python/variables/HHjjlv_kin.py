@@ -173,7 +173,7 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
 
 
 
-class HHjjlnu_kin(TreeCloner):
+class HHjjlv_kin(TreeCloner):
 
     def __init__(self):
         pass
