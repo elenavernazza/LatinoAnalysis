@@ -5240,6 +5240,13 @@ Steps= {
                   'subTargets' : ['JetPairingVBS', 'VBSjjlnu_kin']
   },
 
+  'topCRVBSPairingAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['btagTight', 'JetPairingVBS', 'VBSjjlnu_kin']
+  },
+
   'resolvedVBSPairingGenAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
