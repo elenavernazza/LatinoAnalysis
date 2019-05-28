@@ -5233,25 +5233,32 @@ Steps= {
                   'subTargets' : ["l1looseSimple", 'l1tight']
    },
 
-  'resolvedVBSPairingAndVars' :{
+  'VjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['Vjetpair', 'VBSjjlnu_kin']
   },
 
-  'topCRVBSPairingAndVars' :{
+  'VBSjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['btagTight', 'JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['VBSjetpair', 'VBSjjlnu_kin']
   },
 
-  'resolvedVBSPairingGenAndVars' :{
+  'topCRVBSjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['JetPairingGenVBS','JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['btagTight', 'VBSjetpair', 'VBSjjlnu_kin']
+  },
+
+  'VBSPairGenAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['JetPairingGenVBS','VBSjetpair', 'VBSjjlnu_kin']
   },
 
   'JetPairingGenVBS' :{
@@ -5263,18 +5270,25 @@ Steps= {
 
 
 
-  'JetPairingVBS' :{
+  'Vjetpair' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0'
+                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0 --mode 0'
   },
 
-  'HHPairingGenAndVars' :{
+  'VBSjetpair' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0 --mode 1'
+  },
+
+  'HHPairingGen' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingGenHH','JetPairingHH']
+                  'subTargets' : [ 'JetPairingGenHH','JetPairingHH']
   },
 
 

@@ -97,7 +97,7 @@ class JetPairingGenVBS(TreeCloner):
                 # "true" partons from VBS processes
 
                 # get the pair nearest  to W or Z mass
-                vpair = utils.nearest_masses_pair(partons, [80.385, 91.1876])
+                vpair = utils.nearest_mass_pair(partons, 85.7863)
                 vbspair = [ip for ip in range(4) if not ip in vpair]
 
                 # now associate partons and nearest jets
