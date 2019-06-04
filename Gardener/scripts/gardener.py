@@ -141,6 +141,12 @@ from LatinoAnalysis.Gardener.variables.JetPairingGenHH             import JetPai
 from LatinoAnalysis.Gardener.variables.VBSjjlnu_kin                  import VBSjjlnu_kin
 from LatinoAnalysis.Gardener.variables.HHjjlv_kin                  import HHjjlv_kin
 
+
+
+#MVA variables for HH analysis
+from LatinoAnalysis.Gardener.variables.HH_MvaVar                  import HH_MvaVarFiller
+
+
 if __name__ == '__main__':
 
     print "gardener"

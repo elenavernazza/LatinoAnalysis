@@ -5307,6 +5307,13 @@ Steps= {
                   'command'    : 'gardener.py HHjjlv_kin --ptminjet 20.0'
   },
 
+   'HH_MVAvar' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py HH_MvaVarFiller'
+  },
+
   'gr4JetsSkim' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
