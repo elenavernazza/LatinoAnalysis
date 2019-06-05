@@ -85,7 +85,7 @@ class JetPairingVBS(TreeCloner):
             if self.mode == 0:
                 
                 if len(jets) >=2:
-                    vpair = utils.nearest_masses_pair(jets, [80.385, 91.1876])
+                    vpair = utils.nearest_mass_pair(jets, 85.7863) # mean Mass W, Z
             
                     if len(jets) >=4:
                         # Save pairs of (index, jet) for the next step
@@ -107,7 +107,7 @@ class JetPairingVBS(TreeCloner):
                         # Save pairs of (index, jet) for the next step
                         remaining_jets = [(i,j) for i,j in enumerate(jets) if i not in vbspair]
                         # The result of the next step are indexes in the new collection of jets
-                        vpair_newindexes = utils.nearest_masses_pair([rj[1] for rj in remaining_jets], [80.385, 91.1876])
+                        vpair_newindexes = utils.nearest_mass_pair([rj[1] for rj in remaining_jets], 85.7863) # mean Mass W, Z
                         # going back to global index 
                         vpair = [remaining_jets[i][0] for i in vpair_newindexes]
                                                                 

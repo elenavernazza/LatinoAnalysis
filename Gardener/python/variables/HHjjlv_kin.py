@@ -46,8 +46,7 @@ hh_branches = {
                 "deltaR_lep_b", "deltaR_lep_wjet",                
                 "deltaR_b", "deltaR_wjet",
                 "Rwjets_high", "Rwjets_low",
-                "A_b", "A_wjet",  
-                "L_p", "L_pw", "Ht"]
+                "A_b", "A_wjet",  "Ht"]
             }
 
 
@@ -59,7 +58,7 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     b_phis = []
     b_pts = []
     for i, j in enumerate(bjets):
-        total_h+= j
+        total_b+= j
         b_etas.append(j.Eta())
         b_phis.append(j.Phi())
         b_pts.append(j.Pt())
@@ -137,12 +136,6 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     #Asymmetry
     output["A_b"]  = (b_pts[0] - b_pts[1]) / sum(b_pts)
     output["A_wjet"] = (wjet_pts[0] - wjet_pts[1]) / sum(wjet_pts)
-
-    #Lepton projection
-    lep_vec_t = lepton.Vect()
-    lep_vec_t.SetZ(0)
-    output["L_p"] = (w_lep_t * lep_vec_t) / w_lep.Pt()
-    output["L_pw"] = (w_lep_t * lep_vec_t) / (lepton.Pt() * w_lep.Pt())
 
     # Ht and number of jets with Pt> 20
     # using uncut jets
