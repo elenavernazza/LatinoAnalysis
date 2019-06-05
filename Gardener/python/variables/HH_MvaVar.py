@@ -46,11 +46,11 @@ class HH_MvaVarFiller(TreeCloner):
 #        return group
         pass
 
-#    def checkOptions(self,opts):
-#        if not (hasattr(opts,'kind')):
-#            raise RuntimeError('Missing parameter')
-#        self.kind   = opts.kind
-#        print " kind = ", self.kind
+    def checkOptions(self,opts):
+        if not (hasattr(opts,'kind')):
+            raise RuntimeError('Missing parameter')
+        self.kind   = opts.kind
+        print " kind = ", self.kind
 
     def process(self,**kwargs):
         self.getHH_MVAV = None

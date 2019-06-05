@@ -253,6 +253,10 @@ if __name__ == '__main__':
     modules['JetPairingHH']       = JetPairingHH()
     modules['VBSjjlnu_kin']       = VBSjjlnu_kin()
     modules['HHjjlv_kin']         = HHjjlv_kin()
+
+#MVA for HH
+    modules['HH_MvaVar']         = HH_MvaVarFiller()
+
 # Nuisances
     modules['JESTreeMaker']           = JESTreeMaker()
     modules['LeppTScalerTreeMaker']   = LeppTScalerTreeMaker()
