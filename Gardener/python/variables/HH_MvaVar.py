@@ -1,6 +1,20 @@
 from LatinoAnalysis.Gardener.gardening import TreeCloner
 
 
+print    ''' 
+
+  _    _ _    _   __  ____      ____      __        
+ | |  | | |  | | |  \/  \ \    / /\ \    / /        
+ | |__| | |__| | | \  / |\ \  / /  \ \  / /_ _ _ __ 
+ |  __  |  __  | | |\/| | \ \/ / /\ \ \/ / _` | '__|
+ | |  | | |  | | | |  | |  \  / ____ \  / (_| | |   
+ |_|  |_|_|  |_| |_|  |_|   \/_/    \_\/ \__,_|_|   
+                                                    
+                                                    
+
+''' 
+
+
 import optparse
 import os
 import sys
@@ -32,7 +46,7 @@ class HH_MvaVarFiller(TreeCloner):
         self.getHH_MVAV.AddVariable("deltaphi_lep_b_low",     (self.var9))
 
         baseCMSSW = os.getenv('CMSSW_BASE')
-        self.getHH_MVAV.BookMVA("/gwpool/users/achiapparini/CMSSW_8_0_26_patch1/src/PlotsConfigurations/Configurations/HH/WWbb_lvjj/weights/TMVAClassification_BDT.weights.xml")
+        self.getHH_MVAV.BookMVA("BDT","/gwpool/users/achiapparini/CMSSW_8_0_26_patch1/src/PlotsConfigurations/Configurations/HH/WWbb_lvjj/weights/TMVAClassification_BDT.weights.xml")
 
     def help(self):
         return '''Add mva (BDT) variable'''
@@ -47,11 +61,11 @@ class HH_MvaVarFiller(TreeCloner):
         pass
 
     def checkOptions(self,opts):
-        if not (hasattr(opts,'kind')):
-            raise RuntimeError('Missing parameter')
-        self.kind   = opts.kind
-        print " kind = ", self.kind
-
+#        if not (hasattr(opts,'kind')):
+#            raise RuntimeError('Missing parameter')
+#        self.kind   = opts.kind
+#        print " kind = ", self.kind
+        pass
     def process(self,**kwargs):
         self.getHH_MVAV = None
 
@@ -103,19 +117,19 @@ class HH_MvaVarFiller(TreeCloner):
             pt1 = itree.std_vector_lepton_pt[0]
             pt2 = itree.std_vector_lepton_pt[1]
             
-            if pt1>0 and pt2>0 : 
-              self.var1[0]   =  itree.mjj_b
-              self.var2[0]   =  itree.deltaR_lep_wjet
-              self.var3[0]   =  itree.deltaR_b
-              self.var4[0]   =  itree.deltaphi_lep_wjet_high
-              self.var5[0]   =  itree.deltaR_lep_b
-              self.var6[0]   =  itree.deltaeta_lep_wjet_high
-              self.var7[0]   =  itree.deltaphi_lep_b_high
-              self.var8[0]   =  itree.deltaphi_met_wjet_high
-              self.var9[0]   =  itree.deltaphi_lep_b_low
+            if pt1>0 : 
+                self.var1[0]   =  itree.mjj_b
+                self.var2[0]   =  itree.deltaR_lep_wjet
+                self.var3[0]   =  itree.deltaR_b
+                self.var4[0]   =  itree.deltaphi_lep_wjet_high
+                self.var5[0]   =  itree.deltaR_lep_b
+                self.var6[0]   =  itree.deltaeta_lep_wjet_high
+                self.var7[0]   =  itree.deltaphi_lep_b_high
+                self.var8[0]   =  itree.deltaphi_met_wjet_high
+                self.var9[0]   =  itree.deltaphi_lep_b_low
 
-
-              BDTmva[0] = self.getHH_MVAV.EvaluateMVA("BDT")
+                BDTmva[0] = self.getHH_MVAV.EvaluateMVA("BDT")
+            print "variabile: ", BDTmva[0]
 
             otree.Fill()
             

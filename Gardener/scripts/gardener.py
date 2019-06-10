@@ -255,7 +255,7 @@ if __name__ == '__main__':
     modules['HHjjlv_kin']         = HHjjlv_kin()
 
 #MVA for HH
-    modules['HH_MvaVar']         = HH_MvaVarFiller()
+    modules['HH_MvaVarFiller']         = HH_MvaVarFiller()
 
 # Nuisances
     modules['JESTreeMaker']           = JESTreeMaker()
