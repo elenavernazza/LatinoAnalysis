@@ -46,7 +46,7 @@ class HH_MvaVarFiller(TreeCloner):
         self.getHH_MVAV.AddVariable("deltaphi_lep_b_low",     (self.var9))
 
         baseCMSSW = os.getenv('CMSSW_BASE')
-        self.getHH_MVAV.BookMVA("BDT","/gwpool/users/achiapparini/CMSSW_8_0_26_patch1/src/PlotsConfigurations/Configurations/HH/WWbb_lvjj/weights/TMVAClassification_BDT.weights.xml")
+        self.getHH_MVAV.BookMVA("BDT","/gwpool/users/achiapparini/CMSSW_8_0_26_patch1/src/LatinoAnalysis/Gardener/python/data/TMVAClassification_BDT.weights.xml")
 
     def help(self):
         return '''Add mva (BDT) variable'''
