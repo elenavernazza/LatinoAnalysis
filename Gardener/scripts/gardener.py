@@ -139,6 +139,13 @@ from LatinoAnalysis.Gardener.variables.JetPairingVBS                import JetPa
 from LatinoAnalysis.Gardener.variables.JetPairingHH                import JetPairingHH
 from LatinoAnalysis.Gardener.variables.JetPairingGenHH             import JetPairingGenHH
 from LatinoAnalysis.Gardener.variables.VBSjjlnu_kin                  import VBSjjlnu_kin
+from LatinoAnalysis.Gardener.variables.HHjjlv_kin                  import HHjjlv_kin
+
+
+
+#MVA variables for HH analysis
+from LatinoAnalysis.Gardener.variables.HH_MvaVar                  import HH_MvaVarFiller
+
 
 if __name__ == '__main__':
 
@@ -245,6 +252,10 @@ if __name__ == '__main__':
     modules['JetPairingGenHH']    = JetPairingGenHH()
     modules['JetPairingHH']       = JetPairingHH()
     modules['VBSjjlnu_kin']       = VBSjjlnu_kin()
+    modules['HHjjlv_kin']         = HHjjlv_kin()
+
+#MVA for HH
+    modules['HH_MvaVarFiller']         = HH_MvaVarFiller()
 
 # Nuisances
     modules['JESTreeMaker']           = JESTreeMaker()
