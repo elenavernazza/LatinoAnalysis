@@ -1359,6 +1359,16 @@ Productions= {
                         'onlySamples': [
                              'DYJetsToLL_M-10to50',
                              'QCD_Pt-15to20_MuEnrichedPt5',
+                             'QCD_Pt-20to30_EMEnriched',
+                             'QCD_Pt-20toInf_MuEnrichedPt15',
+                             'QCD_Pt-30to50_EMEnriched',
+                             'QCD_Pt-30toInf_DoubleEMEnriched',
+                             'QCD_Pt-50to80_EMEnriched',
+                             'QCD_Pt_170to250_bcToE',
+                             'QCD_Pt_20to30_bcToE',
+                             'QCD_Pt_250toInf_bcToE',
+                             'QCD_Pt_30to80_bcToE',
+                             'QCD_Pt_80to170_bcToE',
                              'ST_s-channel','ST_t-channel_antitop', 'ST_t-channel_top','ST_tW_antitop','ST_tW_top',
                              'ttHToNonbb_M125',
                              'TTTo2L2Nu','TTToSemiLepton','TTWJetsToLNu_ext2','TTWJetsToLNu', 'TTWJetsToQQ',
@@ -1388,6 +1398,17 @@ Productions= {
                           'dir':      "/group/OneLepton/VBS_semileptonic_signal_summer16/",
                           'dirExt'  : 'LatinoTrees' ,
                           'cmssw'   : 'Full2016' ,
+                        # 37.X fb-1
+                          'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
+                       },
+
+  ### QCD WW semileptonic Run2_2016
+  'QCD_semileptonic_summer16' : {
+                          'isData' : False,
+                          'samples': 'LatinoTrees/AnalysisStep/test/crab/samples/samples_VBS_QCD_semileptonic_2016.py',
+                          'dir'    : '/group/OneLepton/QCD_semileptonic_summer16/',
+                          'dirExt' : 'LatinoTrees' ,
+                          'cmssw'  : 'Full2016' ,
                         # 37.X fb-1
                           'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
                        },
