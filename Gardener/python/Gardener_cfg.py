@@ -3296,6 +3296,14 @@ Steps= {
                   'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC.py'
                },
 
+  'formulasMCVBSjjlnu' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False ,
+                  'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC_VBSjjlnu.py'
+               },
+
+
   'FformulasMC' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,

@@ -226,17 +226,6 @@ METFilter_MC     =  METFilter_Common + '*' + '(('+METFilter_MCver+'*'+METFilter_
 #formulas['METFilter_MCNew'] = METFilter_MCNew
 formulas['METFilter_MC'] = METFilter_MC
 
-# VBSjjlnu combined all desired weights into single variable
-eleWP = 'cut_WP_Tight80X'
-muWP = 'cut_Tight80x'
-formulas['VBSjjlnu_combined_weight'] = \
-  '(' + formulas['GenLepMatch1l'] + ')*' + \
-  '(' + formulas['METFilter_MC']  + ')*' + \
-  '(' + formulas['SFweight1l']    + ')*' + \
-  '(bPogSF_CMVAL)*' + \
-  '(' + formulas['LepSF1l__ele_'+eleWP+'__mu_'+muWP] + ')*' + \
-  '(' + formulas['LepCut1l__ele_'+eleWP+'__mu_'+muWP] + ')*'
-
 import os
 cmssw_base = os.getenv('CMSSW_BASE')
 btagfile = cmssw_base+'/src/LatinoAnalysis/Gardener/python/data/btagging.py'
