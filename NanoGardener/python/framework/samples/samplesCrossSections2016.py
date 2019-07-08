@@ -853,3 +853,16 @@ samples['T2tt__mStop-250to350']     .extend(['xsec=1.',     'kfact=1.000',   're
 samples['T2tt__mStop-350to400']     .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
 samples['T2tt__mStop-400to1200']    .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
 samples['T2tt__mStop-1200to2000']   .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+
+
+# QCD WW
+
+samples['WpToLNu_WmTo2J_QCD'].extend(['xsec=5.544',  'kfact=1.0', 'ref=X'])
+samples['WpTo2J_WmToLNu_QCD'].extend(['xsec=5.561',  'kfact=1.0', 'ref=X'])
+samples['WpToLNu_WpTo2J_QCD'].extend(['xsec=0.08642','kfact=1.0', 'ref=X'])
+samples['WmToLNu_WmTo2J_QCD'].extend(['xsec=0.03774','kfact=1.0', 'ref=X'])
+samples['WpToLNu_ZTo2J_QCD'] .extend(['xsec=2.162',  'kfact=1.0', 'ref=X'])
+samples['WplusTo2JZTo2L']    .extend(['xsec=0.6409', 'kfact=1.0', 'ref=X'])
+samples['WmToLNu_ZTo2J_QCD'] .extend(['xsec=1.302',  'kfact=1.0', 'ref=X'])
+samples['WmTo2J_ZTo2L_QCD']  .extend(['xsec=0.3862', 'kfact=1.0', 'ref=X'])
+samples['ZTo2LZTo2J']        .extend(['xsec=0.3756', 'kfact=1.0', 'ref=X'])
