@@ -50,8 +50,8 @@ hh_branches = {
             }
 
 
-def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, debug=False):
-    output = {}
+def getHHkinematics_b(bjets,lepton, met, output_0, debug=False):
+    output = output_0
     # variables extraction for b-jets
     total_b = TLorentzVector(0,0,0,0)
     b_etas = []
@@ -77,6 +77,33 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     output["b_eta_high"] = abs(b_etas[0])
     output["b_eta_low"] = abs(b_etas[1])
 
+    # Delta Phi with lepton
+    output["deltaphi_lep_b_high"] = abs(lepton.DeltaPhi(bjets[0]))
+    output["deltaphi_lep_b_low"] = abs(lepton.DeltaPhi(bjets[1]))
+
+    # Delta Eta with lepton
+    output["deltaeta_lep_b_high"] = abs(lepton.Eta() - b_etas[0])
+    output["deltaeta_lep_b_low"]  = abs(lepton.Eta() - b_etas[1])
+
+    #Delta Phi with MET
+    output["deltaphi_met_b_high"] = abs(met.DeltaPhi(bjets[0]))
+    output["deltaphi_met_b_low"] = abs(met.DeltaPhi(bjets[1]))
+
+    # Delta Eta with MET
+    output["deltaeta_met_b_high"] = abs(met.Eta() - b_etas[0])
+    output["deltaeta_met_b_low"]  = abs(met.Eta() - b_etas[1])
+
+    # Look for nearest  jet from lepton
+    output["deltaR_lep_b"] = min( [ lepton.DrEtaPhi(bjets[0]), lepton.DrEtaPhi(bjets[1])])
+
+    #Asymmetry
+    output["A_b"]  = (b_pts[0] - b_pts[1]) / sum(b_pts)
+
+    return output
+
+
+def getHHkinematics_w(wjets,lepton, met, output_b, debug=False):
+    output = output_b
     # variables extraction for w-jets
     total_wjet = TLorentzVector(0,0,0,0)
     wjet_etas = []
@@ -101,41 +128,36 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
 
 
     # Delta Phi with lepton
-    output["deltaphi_lep_b_high"] = abs(lepton.DeltaPhi(bjets[0]))
-    output["deltaphi_lep_b_low"] = abs(lepton.DeltaPhi(bjets[1]))
     output["deltaphi_lep_wjet_high"] = abs(lepton.DeltaPhi(wjets[0]))
     output["deltaphi_lep_wjet_low"] = abs(lepton.DeltaPhi(wjets[1]))
 
     # Delta Eta with lepton
-    output["deltaeta_lep_b_high"] = abs(lepton.Eta() - b_etas[0])
-    output["deltaeta_lep_b_low"]  = abs(lepton.Eta() - b_etas[1])
     output["deltaeta_lep_wjet_high"] = abs(lepton.Eta() - wjet_etas[0])
     output["deltaeta_lep_wjet_low"] = abs(lepton.Eta() - wjet_etas[1])
        
     #Delta Phi with MET
-    output["deltaphi_met_b_high"] = abs(met.DeltaPhi(bjets[0]))
-    output["deltaphi_met_b_low"] = abs(met.DeltaPhi(bjets[1]))
     output["deltaphi_met_wjet_high"] = abs(met.DeltaPhi(wjets[0]))
     output["deltaphi_met_wjet_low"] = abs(met.DeltaPhi(wjets[1]))
  
     # Delta Eta with MET
-    output["deltaeta_met_b_high"] = abs(met.Eta() - b_etas[0])
-    output["deltaeta_met_b_low"]  = abs(met.Eta() - b_etas[1])
     output["deltaeta_met_wjet_high"] = abs(met.Eta() - wjet_etas[0])
     output["deltaeta_met_wjet_low"] = abs(met.Eta() - wjet_etas[1])
 
     # Look for nearest  jet from lepton
-    output["deltaR_lep_b"] = min( [ lepton.DrEtaPhi(bjets[0]), lepton.DrEtaPhi(bjets[1])])
     output["deltaR_lep_wjet"] = min( [ lepton.DrEtaPhi(wjets[0]), lepton.DrEtaPhi(wjets[1])])
 
+    #Asymmetry
+    output["A_wjet"] = (wjet_pts[0] - wjet_pts[1]) / sum(wjet_pts)
+
+    return output
+
+
+def getHHkinematics_0(bjets, wjets,lepton, other_jets_eta, other_jets_pts,output_w, debug=False):
+    output = output_w
     #R variables
     pt_b_12  = bjets[0].Pt() * bjets[1].Pt() 
     output["Rwjets_high"] = (lepton.Pt() * wjets[0].Pt()) / pt_b_12
     output["Rwjets_low"] = (lepton.Pt() * wjets[1].Pt()) / pt_b_12
-
-    #Asymmetry
-    output["A_b"]  = (b_pts[0] - b_pts[1]) / sum(b_pts)
-    output["A_wjet"] = (wjet_pts[0] - wjet_pts[1]) / sum(wjet_pts)
 
     # Ht and number of jets with Pt> 20
     # using uncut jets
@@ -144,22 +166,11 @@ def getHHkinematics(bjets, wjets,lepton, met, other_jets_eta, other_jets_pts, de
     N_jets_central = 0
     Ht = 0.
     for j_eta, j_pt in zip(other_jets_eta, other_jets_pts):
-#        # Looking only to jets != b-jets & wjets
-#        Z = abs((j_eta - mean_eta_b)/ deltaeta_b)
-#        Njets += 1
-#        if Z > 0.5:
-#            N_jets_forward += 1
-#        else:
-#            N_jets_central += 1
-        # Ht total
         Ht += j_pt
     # Add b-jets and w-jet to Ht
     for jet in chain(bjets, wjets):
         Ht += jet.Pt()
             
-#    output["N_jets"] = Njets 
-#    output["N_jets_central"] = N_jets_central
-#    output["N_jets_forward"] = N_jets_forward
     output["Ht"] = Ht
 
     return output
@@ -220,43 +231,46 @@ class HHjjlv_kin(TreeCloner):
             if i > 0 and i%step == 0.:
                 print i,'events processed :: ', nentries
 
-            # Check if we have at least 4 jets with pt > ptmin
-            # and Hjets and Wjets are all associated
-            if (not itree.std_vector_jet_pt[3] >= self.ptmin_jet) or  \
-                -1 in itree.H_jets or -1 in itree.W_jets:
-                for var in variables:
-                    variables[var][0] = -9999
-            else:
-                if self.debug:
-                    print "Hjets", [i for i in itree.H_jets]
-                    print "Wjets", [j for j in itree.W_jets]
+            #set all the variables at -9999
+            output = {}
+            for br in hh_branches["F"]:
+                output[br] = -9999
 
-                bjets = utils.get_jets_byindex(itree, itree.H_jets, self.ptmin_jet, self.debug)
-                wjets = utils.get_jets_byindex(itree, itree.W_jets, self.ptmin_jet, self.debug)
-                
-                lepton = TLorentzVector()
-                plep = itree.std_vector_lepton_pt[0] * cosh(itree.std_vector_lepton_eta[0])
-                lepton.SetPtEtaPhiE(itree.std_vector_lepton_pt[0], itree.std_vector_lepton_eta[0],
-                                    itree.std_vector_lepton_phi[0], plep)
-                
-                met = TLorentzVector()
-                met.SetPtEtaPhiE(itree.metPfType1, 0., itree.metPfType1Phi, itree.metPfType1)
 
-                other_jets_eta = []
-                other_jets_pts = []
-                for i, ( eta, pt) in enumerate(zip(itree.std_vector_jet_eta, itree.std_vector_jet_pt)):
-                    if i not in itree.H_jets and i not in itree.W_jets and pt >= self.ptmin_jet and abs(eta)<10:
-                        other_jets_eta.append(eta)
-                        other_jets_pts.append(pt)
+             
+            lepton = TLorentzVector()
+            plep = itree.std_vector_lepton_pt[0] * cosh(itree.std_vector_lepton_eta[0])
+            lepton.SetPtEtaPhiE(itree.std_vector_lepton_pt[0], itree.std_vector_lepton_eta[0],
+                                itree.std_vector_lepton_phi[0], plep)
+                
+            met = TLorentzVector()
+            met.SetPtEtaPhiE(itree.metPfType1, 0., itree.metPfType1Phi, itree.metPfType1)
+
+            other_jets_eta = []
+            other_jets_pts = []
+            for i, ( eta, pt) in enumerate(zip(itree.std_vector_jet_eta, itree.std_vector_jet_pt)):
+                if i not in itree.H_jets and i not in itree.W_jets and pt >= self.ptmin_jet and abs(eta)<10:
+                    other_jets_eta.append(eta)
+                    other_jets_pts.append(pt)
     
-                output =  getHHkinematics(bjets, wjets, lepton, met, 
-                                           other_jets_eta, other_jets_pts, self.debug)
 
-                if self.debug:
-                    print output
 
-                for vk, vvalue in variables.items():
-                    vvalue[0] = output[vk]
+            if -1 not in itree.H_jets:
+                bjets = utils.get_jets_byindex(itree, itree.H_jets, self.ptmin_jet, self.debug)
+                output = getHHkinematics_b(bjets, lepton, met, output, self.debug)
+
+            if -1 not in itree.W_jets:
+                wjets = utils.get_jets_byindex(itree, itree.W_jets, self.ptmin_jet, self.debug)
+                output = getHHkinematics_w(wjets, lepton, met, output, self.debug)
+
+            if -1 not in itree.W_jets and -1 not in itree.H_jets:
+                output = getHHkinematics_0(bjets, wjets, lepton, other_jets_eta, other_jets_pts, output, self.debug)
+
+            if self.debug:
+                print output
+
+            for vk, vvalue in variables.items():
+                vvalue[0] = output[vk]
                 
             otree.Fill()
   
