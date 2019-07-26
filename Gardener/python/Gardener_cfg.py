@@ -1357,11 +1357,22 @@ Productions= {
                         # 37.X fb-1
                         'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full',
                         'onlySamples': [
-                             'DYJetsToLL_M-10to50-LO','ST_s-channel','ST_t-channel_antitop',
-                             'ST_t-channel_top','ST_tW_antitop_noHad_ext1','ST_tW_antitop_noHad',
-                             'ST_tW_antitop','ST_tW_top_noHad_ext1','ST_tW_top_noHad','ST_tW_top',
-                             'ttHToNonbb_M125','TTTo2L2Nu','TTToSemiLepton','TTWJetsToLNu_ext2','TTWJetsToLNu',
-                             'TTWJetsToQQ','Wg_AMCNLOFXFX','Wg_MADGRAPHMLM','WgStarLNuEE','WgStarLNuMuMu',
+                             'DYJetsToLL_M-10to50',
+                             'QCD_Pt-15to20_MuEnrichedPt5',
+                             'QCD_Pt-20to30_EMEnriched',
+                             'QCD_Pt-20toInf_MuEnrichedPt15',
+                             'QCD_Pt-30to50_EMEnriched',
+                             'QCD_Pt-30toInf_DoubleEMEnriched',
+                             'QCD_Pt-50to80_EMEnriched',
+                             'QCD_Pt_170to250_bcToE',
+                             'QCD_Pt_20to30_bcToE',
+                             'QCD_Pt_250toInf_bcToE',
+                             'QCD_Pt_30to80_bcToE',
+                             'QCD_Pt_80to170_bcToE',
+                             'ST_s-channel','ST_t-channel_antitop', 'ST_t-channel_top','ST_tW_antitop','ST_tW_top',
+                             'ttHToNonbb_M125',
+                             'TTTo2L2Nu','TTToSemiLepton','TTWJetsToLNu_ext2','TTWJetsToLNu', 'TTWJetsToQQ',
+                             'Wg_AMCNLOFXFX','Wg_MADGRAPHMLM','WgStarLNuEE','WgStarLNuMuMu',
                              'WJetsToLNu_HT100_200_ext1','WJetsToLNu_HT100_200_ext2','WJetsToLNu_HT100_200',
                              'WJetsToLNu_HT1200_2500_ext1','WJetsToLNu_HT200_400_ext1','WJetsToLNu_HT200_400_ext2',
                              'WJetsToLNu_HT200_400','WJetsToLNu_HT2500_inf_ext1','WJetsToLNu_HT2500_inf',
@@ -1370,7 +1381,8 @@ Productions= {
                              'WLLJJToLNu_M-4To50_QCD_0Jet','WLLJJToLNu_M-4To50_QCD_1Jet','WLLJJToLNu_M-4To50_QCD_2Jet',
                              'WLLJJToLNu_M-4To50_QCD_3Jet','WLLJJToLNu_M-4To50_QCD_4Jet','WLLJJToLNu_M-4To60_EWK_4F',
                              'WLLJJToLNu_M-50_QCD_0Jet','WLLJJToLNu_M-50_QCD_1Jet','WLLJJToLNu_M-50_QCD_2Jet',
-                             'WLLJJToLNu_M-50_QCD_3Jet','WLLJJToLNu_M-60_EWK_4F','WWTo2L2Nu_aTGC_0-400','WWTo2L2Nu_aTGC_400-600',
+                             'WLLJJToLNu_M-50_QCD_3Jet','WLLJJToLNu_M-60_EWK_4F',
+                             'WWTo2L2Nu_aTGC_0-400','WWTo2L2Nu_aTGC_400-600',
                              'WWTo2L2Nu_aTGC_600-800','WWTo2L2Nu_aTGC_800-Inf','WWTo2L2Nu','WWW','WWZ','WZJJ_EWK_QCD',
                              'WZTo1L1Nu2Q','WZTo1L3Nu','WZTo2L2Q','ZZTo2L2Q','ZZZ'
                         ]
@@ -1386,6 +1398,17 @@ Productions= {
                           'dir':      "/group/OneLepton/VBS_semileptonic_signal_summer16/",
                           'dirExt'  : 'LatinoTrees' ,
                           'cmssw'   : 'Full2016' ,
+                        # 37.X fb-1
+                          'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
+                       },
+
+  ### QCD WW semileptonic Run2_2016
+  'QCD_semileptonic_summer16' : {
+                          'isData' : False,
+                          'samples': 'LatinoTrees/AnalysisStep/test/crab/samples/samples_VBS_QCD_semileptonic_2016.py',
+                          'dir'    : '/group/OneLepton/QCD_semileptonic_summer16/',
+                          'dirExt' : 'LatinoTrees' ,
+                          'cmssw'  : 'Full2016' ,
                         # 37.X fb-1
                           'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
                        },
@@ -3148,7 +3171,7 @@ Steps= {
 
                                  ],
                   #'command'    : 'gardener.py BWEwkSingletReweighter -p "latino_(GluGlu|VBF)HToWWTo2L2Nu_M([0-9]+)*"',
-                  'command'    : 'gardener.py BWEwkSingletReweighter ',
+                  'command'    : 'gardener.py BWEwkSingletReweighter -i 1.0 -f 1.0 -s 1.0 -l 0.0 -n 0.0 -q 1.0 ',
                  },
 
 
@@ -3272,6 +3295,14 @@ Steps= {
                   'do4Data'    : False ,
                   'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC.py'
                },
+
+  'formulasMCVBSjjlnu' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False ,
+                  'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC_VBSjjlnu.py'
+               },
+
 
   'FformulasMC' : {
                   'isChain'    : False ,

@@ -299,7 +299,6 @@ class batchJobs :
              jdsFile.write('+AccountingGroup = '+CONDOR_ACCOUNTING_GROUP+'\n')
              jdsFile.write('accounting_group = '+CONDOR_ACCOUNTING_GROUP+'\n')
            jdsFile.write('request_cpus = '+str(self.nThreads)+'\n')
-           jdsFile.write('periodic_hold = CurrentTime - EnteredCurrentStatus > %d\n' % MaxRunTime)
            jdsFile.write('+JobFlavour = "'+queue+'"\n')
            jdsFile.write('queue\n')
            jdsFile.close()
@@ -392,8 +391,6 @@ class batchJobs :
        if CONDOR_ACCOUNTING_GROUP:
          jds += '+AccountingGroup = '+CONDOR_ACCOUNTING_GROUP+'\n'
          jds += 'accounting_group = '+CONDOR_ACCOUNTING_GROUP+'\n'
-       if 'cern' in hostName:       
-         jds += 'periodic_hold = CurrentTime - EnteredCurrentStatus > %d\n' % MaxRunTime
        jds += '+JobFlavour = "'+queue+'"\n'
        jds += 'queue JName in (\n'
        for jName in self.jobsList:
@@ -505,9 +502,9 @@ def batchStatus():
               iStat = os.popen('cat '+jidFile+' | awk -F\'.\' \'{print $1}\' | xargs -n 1 qstat | grep localgrid | awk \'{print $5}\' ').read()
               if 'Q' in iStat : Pend[iStep]+=1
               else: Runn[iStep]+=1
-            elif 'ifca' in hostName :
-              iStat = os.popen('cat '+jidFile+' | awk -F\'.\' \'{print $1}\' | xargs -n 1 qstat | grep Latino | awk \'{print $5}\' ').read()
-              if 'Q' in iStat : Pend[iStep]+=1
+            elif 'ifca' in os.uname()[1] :	
+              iStat = os.popen('qstat | grep \" qw \" |  awk \'{print $1 \" '+jidFile+'\"}\' | xargs -n 2 grep | awk \'{ print $2 }\' ').read()
+	      if 'job' in iStat : Pend[iStep]+=1
               else: Runn[iStep]+=1
             elif 'cern' in hostName and not CERN_USE_LSF:
               iStat = os.popen(r'cat '+jidFile+" | xargs -n 1 condor_q | tail -n1").read()
@@ -641,7 +638,6 @@ def batchResub(Dir='ALL',queue='longlunch',requestCpus=1,IiheWallTime='168:00:00
           if CONDOR_ACCOUNTING_GROUP:
             jdsFile.write('+AccountingGroup = '+CONDOR_ACCOUNTING_GROUP+'\n')
             jdsFile.write('accounting_group = '+CONDOR_ACCOUNTING_GROUP+'\n')
-          jdsFile.write('periodic_hold = CurrentTime - EnteredCurrentStatus > %d\n' % MaxRunTime)
           jdsFile.write('+JobFlavour = "'+queue+'"\n')
           jdsFile.write('queue\n')
           jdsFile.close()
@@ -717,8 +713,6 @@ def batchResub(Dir='ALL',queue='longlunch',requestCpus=1,IiheWallTime='168:00:00
         jds += 'error = '+subDir+'/$(JName).err\n'
         jds += 'log = '+subDir+'/$(JName).log\n'
         jds += 'request_cpus = '+str(requestCpus)+'\n'
-        if 'cern' in hostName:
-          jds += 'periodic_hold = CurrentTime - EnteredCurrentStatus > %d\n' % MaxRunTime
         jds += '+JobFlavour = "'+queue+'"\n'
         if CONDOR_ACCOUNTING_GROUP:
           jds += '+AccountingGroup = '+CONDOR_ACCOUNTING_GROUP+'\n'

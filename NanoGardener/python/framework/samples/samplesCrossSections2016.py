@@ -121,6 +121,7 @@ samples['WZ']			        .extend( ['xsec=47.130',	'kfact=1.000',		'ref=E'] )
 samples['WZ_ext']			.extend( ['xsec=47.130',	'kfact=1.000',		'ref=E'] )
 samples['WZ_AMCNLO']                    .extend( ['xsec=5.26'  ,        'kfact=1.000',          'ref=E'] )
 samples['WZTo3LNu']		        .extend( ['xsec=4.42965',	'kfact=1.000',		'ref=E'] )
+samples['WZTo3LNu_ext1']		        .extend( ['xsec=4.42965',	'kfact=1.000',		'ref=E'] )
 samples['WZTo3LNu_ext']                 .extend( ['xsec=4.42965',       'kfact=1.000',          'ref=E'] )
 samples['WZTo3LNu_mllmin01']	        .extend( ['xsec=58.59',		'kfact=0.601644',	'ref=N'] ) # kfact from gen-level Z0 comparision to WZTo3LNu
 samples['WZTo3LNu_mllmin01_ext1']	.extend( ['xsec=58.59',		'kfact=0.601644',	'ref=N'] ) # kfact from gen-level Z0 comparision to WZTo3LNu
@@ -555,6 +556,14 @@ samples['QCD_Pt_80to170_bcToE']    		.extend( ['xsec=39430',		'kfact=1.000',	're
 samples['QCD_Pt_170to250_bcToE']    		.extend( ['xsec=2607',		'kfact=1.000',	'ref=I'] )
 samples['QCD_Pt_250toInf_bcToE']    		.extend( ['xsec=720.1',		'kfact=1.000',	'ref=I'] )
 
+# GJets
+samples['GJetsDR04_HT40To100'] .extend( ['xsec=17420', 'kfact=1.000', 'ref=I'] )
+samples['GJetsDR04_HT100To200'] .extend( ['xsec=5382', 'kfact=1.000', 'ref=I'] )
+samples['GJetsDR04_HT200To400'] .extend( ['xsec=1177', 'kfact=1.000', 'ref=I'] )
+samples['GJetsDR04_HT400To600'] .extend( ['xsec=132.8', 'kfact=1.000', 'ref=I'] )
+samples['GJetsDR04_HT600ToInf'] .extend( ['xsec=44.25', 'kfact=1.000', 'ref=I'] )
+samples['GJets_HT40To100']      .extend( ['xsec=18740', 'kfact=1.000', 'ref=I'] )
+samples['GJets_HT40To100-ext1'] .extend( ['xsec=18740', 'kfact=1.000', 'ref=I'] )
 
 # VBS
 samples['WpWpJJ_EWK_QCD']   			.extend( ['xsec=0.05454',	'kfact=1.000',	'ref=I'] )
@@ -837,3 +846,23 @@ samples['ZTo2L_ZTo2J']      .extend(['xsec=0.0159',     'kfact=1.000',   'ref=Z'
 # HH_WWbb_bblnujj semileptonic 2016
 # FIXME: insert reference
 samples['HH_bblnjj']        .extend(['xsec=1.97', 'kfact=1.000', 'ref=??'])
+
+# Dummies for Susy samples
+samples['T2tt__mStop-150to250']     .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+samples['T2tt__mStop-250to350']     .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+samples['T2tt__mStop-350to400']     .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+samples['T2tt__mStop-400to1200']    .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+samples['T2tt__mStop-1200to2000']   .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
+
+
+# QCD WW
+
+samples['WpToLNu_WmTo2J_QCD'].extend(['xsec=5.544',  'kfact=1.0', 'ref=X'])
+samples['WpTo2J_WmToLNu_QCD'].extend(['xsec=5.561',  'kfact=1.0', 'ref=X'])
+samples['WpToLNu_WpTo2J_QCD'].extend(['xsec=0.08642','kfact=1.0', 'ref=X'])
+samples['WmToLNu_WmTo2J_QCD'].extend(['xsec=0.03774','kfact=1.0', 'ref=X'])
+samples['WpToLNu_ZTo2J_QCD'] .extend(['xsec=2.162',  'kfact=1.0', 'ref=X'])
+samples['WpTo2J_ZTo2L_QCD']    .extend(['xsec=0.6409', 'kfact=1.0', 'ref=X'])
+samples['WmToLNu_ZTo2J_QCD'] .extend(['xsec=1.302',  'kfact=1.0', 'ref=X'])
+samples['WmTo2J_ZTo2L_QCD']  .extend(['xsec=0.3862', 'kfact=1.0', 'ref=X'])
+samples['ZTo2L_ZTo2J_QCD']        .extend(['xsec=0.3756', 'kfact=1.0', 'ref=X'])
