@@ -5354,7 +5354,7 @@ Steps= {
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'command'    : 'gardener.py JetPairingHH --ptminjet 20.0 --bWP L -m 0'
+                  'command'    : 'gardener.py JetPairingHH --ptminjet 20.0 --bWP M -m 0'
   },
 
    'VBSjjlnu_kin' :{

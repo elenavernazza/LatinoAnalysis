@@ -263,7 +263,7 @@ class HHjjlv_kin(TreeCloner):
                 wjets = utils.get_jets_byindex(itree, itree.W_jets, self.ptmin_jet, self.debug)
                 output = getHHkinematics_w(wjets, lepton, met, output, self.debug)
 
-            if -1 not in itree.W_jets and -1 not in itree.H_jets:
+            if -1 not in itree.W_jets or -1 not in itree.H_jets:
                 output = getHHkinematics_0(bjets, wjets, lepton, other_jets_eta, other_jets_pts, output, self.debug)
 
             if self.debug:
@@ -274,5 +274,8 @@ class HHjjlv_kin(TreeCloner):
                 
             otree.Fill()
   
+
+
+
         self.disconnect()
         print '- Eventloop completed'
