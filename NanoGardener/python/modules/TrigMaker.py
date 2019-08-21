@@ -11,7 +11,7 @@ from LatinoAnalysis.NanoGardener.data.TrigMaker_cfg import Trigger
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 
-class TrigMakerGen(Module):
+class TrigMaker(Module):
     '''
     Trigger Maker module MC,
     ''' 
@@ -21,7 +21,8 @@ class TrigMakerGen(Module):
         self.isData = isData
         self.keepRunP = keepRunP
         self.seeded = seeded
-
+        self.firstEvent = True
+ 
         self.mu_maxPt = 200
         self.mu_minPt = 10
         self.mu_maxEta = 2.4
@@ -44,9 +45,9 @@ class TrigMakerGen(Module):
 
         self.Trigger = var['Trigger']
 
-        print('TrigMakerGen: CMSSW = ' + self.cmssw + ', isData = ' + str(self.isData) + ', keepRunPeriod = ' + str(self.keepRunP))
+        print('TrigMaker: CMSSW = ' + self.cmssw + ', isData = ' + str(self.isData) + ', keepRunPeriod = ' + str(self.keepRunP))
         if cfg_path != 'LatinoAnalysis/NanoGardener/python/data/TrigMaker_cfg.py':
-            print('TrigMakerGen: loaded trigger configuration from ' + cfg_path)
+            print('TrigMaker: loaded trigger configuration from ' + cfg_path)
  
     def beginJob(self): 
         pass
@@ -60,13 +61,13 @@ class TrigMakerGen(Module):
         
         if self.keepRunP:
            # Check if input tree indeed contains run_period
-           isThere = False
-           for br in inputTree.GetListOfBranches():
-              if br.GetName() == 'run_period': isThere = True
-           if not isThere: print("WARNING: Input tree does not contain the 'run_period' branch, while 'keepRunP' is True.")
-           else: 
-               try: self.NewVar['I'].remove('run_period')
-               except: pass
+           #isThere = False
+           #for br in wrappedOutputTree.GetListOfBranches():
+           #   if br.GetName() == 'run_period': isThere = True
+           #if not isThere: print("TrigMaker WARNING: Input tree does not contain the 'run_period' branch, while 'keepRunP' is True.")
+           #else: 
+           try: self.NewVar['I'].remove('run_period')
+           except: pass
  
         for typ in self.NewVar:
            for name in self.NewVar[typ]:
@@ -276,15 +277,18 @@ class TrigMakerGen(Module):
         pt2, eta2 = self._over_under(pdgId2, pt2, eta2)
       
         eff, eff_dz , eff_gl = self._pair_eff(pdgId1, pt1, eta1, pdgId2, pt2, eta2, nvtx, run_p)
-     
+        #eff_map = ['SingleEle', 'SingleMu', 'EleMuLegHigPt', 'MuEleLegHigPt', 'MuEleLegLowPt', 'EleMuLegLowPt']
+
         #print abs(pdgId1) , abs(pdgId2) 
         #print eff, eff_dz , eff_gl
  
         eff_dbl = [0., 0., 0.]
+        eff_sgl = [0., 0., 0.]
         eff_evt = [0., 0., 0.]
         for i in range(3): 
            eff_dbl[i] = (eff[4][i]*eff[3][i] + eff[2][i]*eff[5][i] - eff[3][i]*eff[2][i])*eff_gl[2][i]*eff_dz[i]
-           eff_evt[i] = (eff_dbl[i] + eff[0][i]*eff_gl[0][i]*(1. - eff[5][i]) + eff[1][i]*eff_gl[1][i]*(1. - eff[4][i]))
+           eff_sgl[i] =  eff[0][i]*eff_gl[0][i]+eff[1][i]*eff_gl[1][i]-eff[0][i]*eff[1][i]*eff_gl[0][i]*eff_gl[1][i]
+           eff_evt[i] = eff_sgl[i] + eff_dbl[i] - eff_sgl[i]*eff_dbl[i] 
         #print eff_dbl , eff_evt        
 
         eff_tl = eff[2][0]*eff[5][0]*eff_gl[2][0]*eff_dz[0] #eff_dz
@@ -302,11 +306,11 @@ class TrigMakerGen(Module):
         elif abs(pdgId1) == 11 and abs(pdgId2) == 13:
            eff_evt_v[0] = eff[0][0]*eff_gl[0][0]
            eff_evt_v[1] = eff[1][0]*eff_gl[1][0]
-           eff_evt_v[4]  = (eff_tl + (1 - eff_tl)*eff_lt)*eff_gl[2][0]
+           eff_evt_v[4]  = (eff[4][0]*eff[3][0] + eff[2][0]*eff[5][0] - eff[3][0]*eff[2][0])*eff_gl[2][0]*eff_dz[0]
         else:
            eff_evt_v[0] = eff[1][0]*eff_gl[0][0]
            eff_evt_v[1] = eff[0][0]*eff_gl[1][0]
-           eff_evt_v[4]  = (eff_tl + (1 - eff_tl)*eff_lt)*eff_gl[2][0]
+           eff_evt_v[4]  = (eff[4][0]*eff[3][0] + eff[2][0]*eff[5][0] - eff[3][0]*eff[2][0])*eff_gl[2][0]*eff_dz[0]
 
         # Trigger emulator
         Trig_em = [False, False, False, False, False, False]  
@@ -350,13 +354,17 @@ class TrigMakerGen(Module):
          
         pt1, eta1 = self._over_under(pdgId1, pt1, eta1)
 
-        if abs(pdfId1) == 11 :
+        if abs(pdgId1) == 11 :
            singleLeg  = "SingleEle"                              
-        if abs(pdfId1) == 13:
+        if abs(pdgId1) == 13:
            singleLeg  = "SingleMu"
 
          # Get Leg Efficiencies
-        eff_sgl, low_eff_sgl, high_eff_sgl = self._getLegEff (pt1, eta1, run_p, singleLeg)
+        eff_sgl, low_eff_sgl, high_eff_sgl = self._get_LegEff (pt1, eta1, run_p, singleLeg)
+        eff_v=[]
+        eff_v.append(eff_sgl)
+        eff_v.append(low_eff_sgl) 
+        eff_v.append(high_eff_sgl)
 
         # Trigger emulator
         Trig_em = [False, False, False, False, False, False]  
@@ -369,17 +377,17 @@ class TrigMakerGen(Module):
 
          # eff_evt_v_map = ['sinEl', 'sinMu', 'doubleEl', 'doubleMu', 'ElMu']
         eff_evt_v = [0.,0.,0.,0.,0.]
-        if abs(pdfId1) == 11 :
-           eff_evt_v[0] = eff_sgl[0]
-           Trig_em[0] = eff_sgl[0] > Trndm[0]
+        if abs(pdgId1) == 11 :
+           eff_evt_v[0] = eff_sgl
+           Trig_em[0] = eff_sgl > Trndm[0]
 
-        if abs(pdfId1) == 13 :
-           eff_evt_v[1] = eff_sgl[0]
-           Trig_em[1] = eff_sgl[0] > Trndm[1]
+        if abs(pdgId1) == 13 :
+           eff_evt_v[1] = eff_sgl
+           Trig_em[1] = eff_sgl > Trndm[1]
          
         Trig_em[0] = Trig_em[1] or Trig_em[2] or Trig_em[3] or Trig_em[4] or Trig_em[5]
 
-        return eff_sgl, eff_evt_v, Trig_em 
+        return eff_v, eff_evt_v, Trig_em 
 
     def _get_3lw(self, pdgId1, pt1, eta1, pdgId2, pt2, eta2, pdgId3, pt3, eta3, nvtx, run_p):
         
@@ -490,7 +498,11 @@ class TrigMakerGen(Module):
     #_____Analyze
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
- 
+
+        if self.firstEvent:
+            self.firstEvent = False
+            if self.keepRunP and not hasattr(event, 'run_period'): raise ValueError('TrigMaker: event does not contain the \'run_period\' branch, while \'keepRunP\' is True.')
+
         # Make your life easier
         if self.seeded: evt = eval(self.event)
         else: evt = None
@@ -543,7 +555,7 @@ class TrigMakerGen(Module):
            if 'EffWeight' in name: eff_dict[name] = 0.
         Trig_em = [False]*6     
 
-        if nLep == 1:
+        if nLep > 0 :
            temp_evt, temp_evt_v, Trig_em = self._get_w1l(pdgId[0], pt[0], eta[0], run_p, evt)
            for name in self.NewVar['F']:
                if 'TriggerEffWeight' in name:
