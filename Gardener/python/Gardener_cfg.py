@@ -5517,5 +5517,11 @@ Steps= {
                                                               ) == 0 \' '
                   },
 
+  'wjetsCR' : {
+                'isChain'    : False ,
+                'do4MC'      : True ,
+                'do4Data'    : True,
+                'command'    : 'gardener.py filter -f \' (mjj_vjet > 40 && mjj_vjet < 65) || (mjj_vjet > 105 && mjj_vjet < 150) \' '
+  },
 
 }
