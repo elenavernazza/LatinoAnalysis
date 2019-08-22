@@ -90,20 +90,26 @@ class JetPairingHH(TreeCloner):
             bjets = [(i, bscore) for i, bscore in enumerate(b_scores)
                     if bscore >= bTaggingWPs['deepCSV'][self.bWP]]
 
-            print bjets
+            if self.debug:  print bjets
 
-            if len(bjets) >= 2:
+            if len(bjets) ==1 :
+                hpair = [j[0] for j in list(sorted(bjets, key=itemgetter(1), reverse=True))[:1]]
+                hpair.append(-1)
+
+
+            elif len(bjets) >= 2:
                 # Take the indexes of the two jets with bigger bscore
                 hpair = [j[0] for j in list(sorted(bjets, key=itemgetter(1), reverse=True))[:2]]
-                print hpair
                 
-                if len(jets) >=4:
-                    if self.mode == 0:
-                        wpair = utils.nearest_mass_pair_notH(jets, 80.385, hpair)
-                    elif self.mode == 1:
-                        wpair = utils.max_pt_pair_notH(jets, hpair)   
-                    elif self.mode == 2:
-                        wpair = utils.min_deltaeta_pairs_notH(jets, hpair)
+                if self.debug:  print hpair
+                
+            if len(jets) >=4:
+                if self.mode == 0:
+                    wpair = utils.nearest_mass_pair_notH(jets, 80.385, hpair)
+                elif self.mode == 1:
+                    wpair = utils.max_pt_pair_notH(jets, hpair)   
+                elif self.mode == 2:
+                    wpair = utils.min_deltaeta_pairs_notH(jets, hpair)
 
             H_jets[0], H_jets[1] = hpair 
             W_jets[0], W_jets[1] = wpair            
