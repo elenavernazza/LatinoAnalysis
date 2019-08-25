@@ -41,7 +41,7 @@ formulas['VBSjjlnu_combined_weight'] = \
   '(' + formulas_source['GenLepMatch1l'] + ')*' + \
   '(' + formulas_source['METFilter_MC']  + ')*' + \
   '(' + formulas_source['SFweight1l']    + ')*' + \
-  '(bPogSF_CMVAL)*' + \
+  '(event.bPogSF_CMVAL)*' + \
   '(' + formulas_source['LepSF1l__ele_'+eleWP+'__mu_'+muWP] + ')*' + \
-  '(' + formulas_source['LepCut1l__ele_'+eleWP+'__mu_'+muWP] + ')*'
+  '(' + formulas_source['LepCut1l__ele_'+eleWP+'__mu_'+muWP] + ')'
 
