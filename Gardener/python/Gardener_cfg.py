@@ -5290,6 +5290,7 @@ Steps= {
                   'subTargets' : ['VBSjetpair', 'VBSjjlnu_kin']
   },
 
+  ## VBSjjlnu: old, do not use this. CR redefinedd with btagLoose
   'topCRVBSjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
@@ -5517,11 +5518,21 @@ Steps= {
                                                               ) == 0 \' '
                   },
 
+  ## VBSjjlnu control regions
   'wjetsCR' : {
                 'isChain'    : False ,
                 'do4MC'      : True ,
                 'do4Data'    : True,
                 'command'    : 'gardener.py filter -f \' (mjj_vjet > 40 && mjj_vjet < 65) || (mjj_vjet > 105 && mjj_vjet < 150) \' '
   },
+
+  'topCR' : {
+                'isChain'   : True,
+                'do4MC'     : True,
+                'do4Data'   : True,
+                # 'subTargets': ['btagLoose', 'LepTrgFix','dorochester','formulasMC','gr4JetsSkim','VBSjetpairAndVars']
+                # 'subTargets': ['btagLoose', 'LepTrgFix',                           'dorochester',                                                                                                  'formulasMC', 'gr4JetsSkim', 'VBSjetpairAndVars']
+                'subTargets':   ['btagLoose', 'etaptlepsf' , 'TrigMakerMCkeepRun',   'dorochesterMC','dorochesterData','TrigMakerMCkeepRun','IdIsoSC_Multi','l2kin','l3kin','l4kin','do_dymvaHiggs', 'formulasMC', 'gr4JetsSkim', 'VBSjetpair', 'VBSjjlnu_kin']
+  }
 
 }
