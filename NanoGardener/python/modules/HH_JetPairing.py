@@ -180,16 +180,19 @@ class HH_JetPairing(Module):
         (tag1, algo1), (tag2, algo2) = pairing_strategies_resolved[mode]
         if self.debug: print "Association: ", tag1, algo1.__name__, tag2, algo2.__name__
 
+        W_jets = [-1,-1]
+        
+        if len(good_jets) >= 4:
 
-        if mode == "nearest_massW":
-            W_jets = utils.nearest_mass_pair_notH(good_jets, 80.385, hpair)
+            if mode == "nearest_massW":
+                W_jets = utils.nearest_mass_pair_notH(good_jets, 80.385, hpair)
       
 
-        elif mode == "max_pt_pair":
-            W_jets = utils.max_pt_pair_notH(good_jets, hpair)
+            elif mode == "max_pt_pair":
+                W_jets = utils.max_pt_pair_notH(good_jets, hpair)
 
-        elif mode == "min_deltaeta_pair":
-            W_jets = utils.min_deltaeta_pairs_notH(jets, hpair)
+            elif mode == "min_deltaeta_pair":
+                W_jets = utils.min_deltaeta_pairs_notH(jets, hpair)
 
         # Now going back to CleanJet indexes 
         W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
