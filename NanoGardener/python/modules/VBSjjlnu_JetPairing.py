@@ -132,7 +132,7 @@ class VBSjjlnu_JetPairing(Module):
             cache = { }  # algo: ( associated_jets, remaining jets)
 
             if self.mode=="ALL":
-                for key, algos in pairing_strategies_resolved.items():
+                for key in pairing_strategies_resolved:
                     self.perform_jet_association(key, good_jets, good_jets_ids, cache)
             else:
                 if self.mode in pairing_strategies_resolved:

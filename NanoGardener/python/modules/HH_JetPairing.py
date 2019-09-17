@@ -11,42 +11,27 @@ nearest_massWZ.__name__ = "nearest_massWZ"
 
 # The dictionary define the name of the tagging strategy and functions to 
 # use. The order of the list defines the order of the tagging of VBS and V jets
-pairing_strategies_resolved = {
-    "nearest_massW"      : ["W", nearest_massW],
+pairing_strategies = {
+    "nearest_massW"      : ["W", nearest_massWZ],
     "max_pt_pair"        : ["W", max_pt_pair],
     "min_deltaeta_pair"  : ["W", min_deltaeta_pair],
 
 }
 
-
+bTaggingWPs = {
+    "deepCSV" : {
+        "L" : 0.1522,
+        "M" : 0.4941,
+        "T" : 0.8001
+    }
+}
 
 
 class HH_JetPairing(Module):
 
-    def __init__(self, minpt=20, mode="ALL", bWP="M" debug = False):
+    def __init__(self, minpt=20, mode="ALL", bWP="M", debug = False):
         '''
         This modules performs the Jet pairing for HH semileptonic analysis. 
-        It separates events in three categories: boosted and resolved. 
-
-        In the boosted category, only events with 1 FatJet are saved. Events with more FatJets 
-        are vetoed. In the remaining jets the VBS pair is selected using the maximum invariant mass. 
-
-        In the resolved category (>= 4 jets) different algorithms can be used to 
-        choose the VBS jets and V jets. 
-
-        An eta interval cut can be specified to avoid using the jets in those regions for tagging
-
-        Modes (for resolved category):
-        "maxmjj_massWZ" : before VBS jets with max Mjj, than V-jets with mass nearest to (mW+mZ)/2
-        "maxmjj_maxPt" : before VBS jets with max Mjj, then V-jets as the pair with max Pt,
-        "maxmjj_maxPtsingle"  : before VBS jets with max Mjj, then V-jets as the two jets with highest Pt
-        "maxPt_massWZ"  : before VBS jets as pair with max Pt, then V-jets with mass W,Z
-        "maxPtsingle_massWZ" : befor VBS jets as the two jets with highest Pt, then V-jet with mass W,Z
-
-        "massWZ_maxmjj": before V jets with mass nearest to W,Z, then VBS jets with MaxMjj
-        "massWZ_maxPt" :before V jets with mass nearest to W,Z, then VBS jets with pair with max Pt
-       
-
         '''
         self.minpt = minpt
         self.mode = mode
@@ -65,7 +50,7 @@ class HH_JetPairing(Module):
 
         # New Branches
         self.out.branch("H_jets", "I", n=2)
-        for key in pairing_strategies_resolved.keys():
+        for key in pairing_strategies.keys():
             self.out.branch("W_jets_"+key, "I", n=2)
 
         
@@ -92,41 +77,58 @@ class HH_JetPairing(Module):
         bjets = [(i, bscore) for i, bscore in enumerate(b_scores)
                     if bscore >= bTaggingWPs['deepCSV'][self.bWP]]
 
-        if self.debug:  print bjets
+        good_jets_b_ord = list(sorted(bjets, key=itemgetter(1), reverse=True))
+
+        if self.debug:  print "btag jets: ", good_jets_b_ord
 
         hpair = [-1,-1]
+
+        if len(bjets) == 0: 
+            # Cut the event
+            return False
   
-        if len(bjets) ==1 :
-            hpair = [j[0] for j in list(sorted(bjets, key=itemgetter(1), reverse=True))[:1]]
-            hpair.append(-1)
-
+        elif len(bjets) == 1 :
+            # IN good jets index
+            hpair[0] = good_jets_b_ord[0][0]
+            
         elif len(bjets) >= 2:
-            hpair = [j[0] for j in list(sorted(bjets, key=itemgetter(1), reverse=True))[:2]]        
+            hpair[0] = good_jets_b_ord[0][0]
+            hpair[1] = good_jets_b_ord[1][0]
 
-        self.out.fillBranch("H_jets", hpair)
-
-
-            # Cache of association algos
-            # (N.B. indexes by good_jets collections)
-            cache = { }  # algo: ( associated_jets, remaining jets)
-
+        # get the remaiming jets with index in good_jets collection
+        remain_jets = [(i,j) for i,j in enumerate(good_jets) if i not in hpair]
+        
+        if len(remain_jets) >= 2: 
             if self.mode=="ALL":
-                for key, algos in pairing_strategies_resolved.items():
-                    self.perform_jet_association(key, good_jets, good_jets_ids, cache, hpair)
+                for key in pairing_strategies:
+                    tag, algo = pairing_strategies[key]
+                    if self.debug: print "Association: ", tag, algo.__name__,
+                    W_jets = [remain_jets[k][0] for k in algo([rj[1] for rj in remain_jets])]
+
+                    # Go back to CleanJet index
+                    W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
+                    self.out.fillBranch("{}_jets_{}".format(tag,key), W_cleanjets)
             else:
-                if self.mode in pairing_strategies_resolved:
-                    self.perform_jet_association(self.mode, good_jets, good_jets_ids, cache, hpair)
+                if self.mode in pairing_strategies:
+                    tag, algo = pairing_strategies[self.mode]
+                    if self.debug: print "Association: ", tag, algo.__name__,
+                    W_jets = [remain_jets[k][0] for k in algo([rj[1] for rj in remain_jets])]
+                    # Go back to CleanJet index
+                    W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
+                    self.out.fillBranch("{}_jets_{}".format(tag,self.mode), W_cleanjets)
                 else:
                     print("ERROR! Selected pairing mode not found!!")
                     return False
+            
+            
         else:
-            # Cut the event:
-            # or it's boosted but with not enough jets, 
-            # or it is not boosted and it has less than 4 jets with minpt
-            #print("Event removed")
+            # Not enought jets left for pairing
             return False
 
-
+        # Now going back to CleanJet indexes 
+        H_cleanjets = [good_jets_ids[ij] for ij in hpair]
+        self.out.fillBranch("H_jets", H_cleanjets)
+        
                 
         """return True (go to next module) or False (fail, go to next event)"""
         return True
@@ -144,8 +146,7 @@ class HH_JetPairing(Module):
         jets = []
         coll_ids = []
         b_scores = []
-        for ijnf in range(len(self.JetNotFat_coll)):
-            jetindex = self.JetNotFat_coll[ijnf].jetIdx
+        for jetindex in range(len(self.Jet_coll)):
             # index in the original Jet collection
             rawjetid = self.Jet_coll[jetindex].jetIdx
             pt, eta, phi, mass, bvalue = self.Jet_coll[jetindex].pt, \
@@ -169,34 +170,6 @@ class HH_JetPairing(Module):
                 jets.append(vec)
                 coll_ids.append(jetindex)
                 b_scores.append(bvalue)
-        return jets, coll_ids, bvalue
+        return jets, coll_ids, b_scores
 
-
-    def perform_jet_association(self, mode, good_jets, good_jets_ids, cache, hpair):
-        '''
-            This function perform the association of the jets with one of the 
-            algorithm in pairing_strategies_resolved map.
-        '''
-        (tag1, algo1), (tag2, algo2) = pairing_strategies_resolved[mode]
-        if self.debug: print "Association: ", tag1, algo1.__name__, tag2, algo2.__name__
-
-        W_jets = [-1,-1]
-        
-        if len(good_jets) >= 4:
-
-            if mode == "nearest_massW":
-                W_jets = utils.nearest_mass_pair_notH(good_jets, 80.385, hpair)
-      
-
-            elif mode == "max_pt_pair":
-                W_jets = utils.max_pt_pair_notH(good_jets, hpair)
-
-            elif mode == "min_deltaeta_pair":
-                W_jets = utils.min_deltaeta_pairs_notH(jets, hpair)
-
-        # Now going back to CleanJet indexes 
-        W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
-
-
-        self.out.fillBranch("{}_jets_{}".format(tag2,mode), W_cleanjets)
 

@@ -2056,6 +2056,31 @@ Steps = {
       'onlySample' : LNuJJ_VBS_Samples_bkg + LNuJJ_VBS_Samples_signal + LNuJJ_VBS_Samples_data2017
   },
 
+  
+
+  'HHjjlnu_pairing' : {
+      'isChain'    : False ,
+      'do4MC'      : True  ,
+      'do4Data'    : True  ,
+      'import'     : 'LatinoAnalysis.NanoGardener.modules.HH_JetPairing',
+      'declare'    : 'hh_pairing = lambda : HH_JetPairing(minpt=20, mode="ALL", bWP="M",debug=False)',
+      'module'     : 'hh_pairing()'
+  },
+
+  'HHjjlnuSkim2017v1' : {
+      'isChain'    : True ,
+      'do4MC'      : True  ,
+      'do4Data'    : True  ,
+      'selection'  : '"nLepton>=1  && Lepton_pt[0]>30 \
+                          && (  Lepton_isTightElectron_mvaFall17V1Iso_WP90[0] > 0.5 \
+                             || Lepton_isTightMuon_cut_Tight_HWWW[0] > 0.5 ) \
+                        && Alt$(Lepton_pt[1],0)<=10 && Alt$(Lepton_isLoose[1],1)>0.5 \
+                    && ( Alt$(Lepton_isTightElectron_mvaFall17V1Iso_WP90[1], 0) < 0.5 \
+                         || Alt$(Lepton_isTightMuon_cut_Tight_HWWW[1],0) < 0.5 )       \
+                        "',
+      'subTargets': ['HHjjlnu_pairing']     
+  },
+
 # ------------------------------------ SPECIAL STEPS: HADD & UEPS -------------------------------------------------
 
 ## ------- HADD 
