@@ -2073,13 +2073,22 @@ Steps = {
 
   
 
-  'HHjjlnu_pairing' : {
+  'HHbblnu_pairing' : {
       'isChain'    : False ,
       'do4MC'      : True  ,
       'do4Data'    : True  ,
-      'import'     : 'LatinoAnalysis.NanoGardener.modules.HH_JetPairing',
-      'declare'    : 'hh_pairing = lambda : HH_JetPairing(minpt=20, mode="ALL", bWP="M",debug=False)',
+      'import'     : 'LatinoAnalysis.NanoGardener.modules.HHbblnu_JetPairing',
+      'declare'    : 'hh_pairing = lambda : HHbblnu_JetPairing(minpt=20, mode="ALL", bWP="M",debug=False)',
       'module'     : 'hh_pairing()'
+  },
+
+  'HHbblnu_kin': {
+      'isChain'    : False ,
+      'do4MC'      : True  ,
+      'do4Data'    : True  ,
+      'import'     : 'LatinoAnalysis.NanoGardener.modules.HHbblnu_kin',
+      'declare'    : 'hh_vars = lambda : HHbblnu_kin(minptjet=20., mode="nearest_massWZ", debug=False)',
+      'module'     : 'hh_vars()'
   },
 
   'HHjjlnuSkim2017v1' : {
@@ -2093,7 +2102,7 @@ Steps = {
                     && ( Alt$(Lepton_isTightElectron_mvaFall17V1Iso_WP90[1], 0) < 0.5 \
                          || Alt$(Lepton_isTightMuon_cut_Tight_HWWW[1],0) < 0.5 )       \
                         "',
-      'subTargets': ['HHjjlnu_pairing']     
+      'subTargets': ['HHbblnu_pairing', "HHbblnu_kin"]     
   },
 
 # ------------------------------------ SPECIAL STEPS: HADD & UEPS -------------------------------------------------

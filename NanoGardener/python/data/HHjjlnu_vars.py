@@ -32,8 +32,7 @@ def getDefault():
     return output
 
 
-def getHHkinematics_b(bjets,lepton, met, output_0, debug=False):
-    output = output_0
+def getHHkinematics_b(bjets, wjets, lepton, met, other_jets, output, debug=False):
     # variables extraction for b-jets
     total_b = TLorentzVector(0,0,0,0)
     b_etas = []
@@ -81,11 +80,20 @@ def getHHkinematics_b(bjets,lepton, met, output_0, debug=False):
     #Asymmetry
     output["A_b"]  = (b_pts[0] - b_pts[1]) / sum(b_pts)
 
+    Ht = 0.
+    for oj in other_jets:
+        j_pt, j_eta = oj.Pt(), oj.Eta()
+        Ht += j_pt
+    # Add b-jets and w-jet to Ht
+    for jet in chain(bjets, wjets):
+        Ht += jet.Pt()
+            
+    output["Ht"] = Ht
+
     return output
 
 
-def getHHkinematics_w(wjets,lepton, met, output_b, debug=False):
-    output = output_b
+def getHHkinematics_w(bjets, wjets, lepton, met, other_jets, output, debug=False):
     # variables extraction for w-jets
     total_wjet = TLorentzVector(0,0,0,0)
     wjet_etas = []
@@ -131,21 +139,9 @@ def getHHkinematics_w(wjets,lepton, met, output_b, debug=False):
     #Asymmetry
     output["A_wjet"] = (wjet_pts[0] - wjet_pts[1]) / sum(wjet_pts)
 
-    return output
-
-
-def getHHkinematics_0(bjets, wjets, lepton, other_jets, output_w, debug=False):
-    output = output_w
-    #R variables
-    pt_b_12  = bjets[0].Pt() * bjets[1].Pt() 
-    output["Rwjets_high"] = (lepton.Pt() * wjets[0].Pt()) / pt_b_12
-    output["Rwjets_low"] = (lepton.Pt() * wjets[1].Pt()) / pt_b_12
-
-    # Ht and number of jets with Pt> 20
-    # using uncut jets
-
     Ht = 0.
-    for j_eta, j_pt in zip(other_jets.Eta, other_jets.Pt):
+    for oj in other_jets:
+        j_pt, j_eta = oj.Pt(), oj.Eta()
         Ht += j_pt
     # Add b-jets and w-jet to Ht
     for jet in chain(bjets, wjets):

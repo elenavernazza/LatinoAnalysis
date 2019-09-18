@@ -7,16 +7,16 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import LatinoAnalysis.NanoGardener.data.HHjjlnu_vars as hh_vars
 
 
-class HHjjlnu_kin(Module):
+class HHbblnu_kin(Module):
     '''
     This module calculates several HH semileptonic analysis observables. 
     The H_jets and W_jets have been already associated by the HH_JetPairing module. 
     The mode selects the tagging algorithm.   
     '''
-    def __init__(self, minptjet = 20, mode="nearest_massW", debug=False):
+    def __init__(self, minptjet = 20, mode="nearest_massWZ", debug=False):
         self.minptjet = minptjet
-        self.H_jets_var = { "H_jets"}
-        self.W_jets_var = { "W_jets_"+mode}
+        self.H_jets_var = "H_jets"
+        self.W_jets_var = "W_jets_"+mode
         self.debug = debug      
 
     def beginJob(self):
@@ -48,6 +48,8 @@ class HHjjlnu_kin(Module):
         # # do this check at every event, as other modules might have read further branches
         # if event._tree._ttreereaderversion > self._ttreereaderversion: 
         #     self.initReaders(event._tree)
+        H_jets_index   = [event[self.H_jets_var][0], event[self.H_jets_var][1]]
+        W_jets_index = [event[self.W_jets_var][0], event[self.W_jets_var][1]]
 
         lepton_raw = Object(event, "Lepton", index=0)
         puppiMET    = Object(event, "PuppiMET")
@@ -57,8 +59,6 @@ class HHjjlnu_kin(Module):
         puppimet = TLorentzVector()
         puppimet.SetPtEtaPhiE(puppiMET.pt, 0., puppiMET.phi, puppiMET.pt)
        
-        output = {}
-        output = hh_vars.getDefault()
 
         jets, jets_ids = self.get_jets_vectors(self.minptjet)
         bjets = []
@@ -67,19 +67,22 @@ class HHjjlnu_kin(Module):
         for jet, jetind in zip(jets, jets_ids):
             if jetind in H_jets_index:  
                 bjets.append(jet)
-            elif jetind in W_jets_var:                      
+            elif jetind in W_jets_index:                      
                 wjets.append(jet)
             else:
                 other_jets.append(jet)
 
-        if -1 not in self.H_jets_var:
-                output = hh_vars.getHHkinematics_b(bjets, lep, puppimet, output, self.debug)
+        if self.debug: 
+            print "H_jets", H_jets_index, bjets
+            print "W_jets", W_jets_index, wjets
 
-        if -1 not in self.W_jets_var:
-                output = hh_vars.getHHkinematics_w(wjets, lep, puppimet, output, self.debug)
+        output = hh_vars.getDefault()
 
-        if -1 not in self.H_jets_var or -1 not in self.W_jets_var:
-                output = hh_vars.getHHkinematics_0(bjets, wjets, lep, other_jets, output, self.debug)
+        if -1 not in H_jets_index:
+                output = hh_vars.getHHkinematics_b(bjets, wjets, lep, puppimet, other_jets, output, self.debug)
+
+        if -1 not in W_jets_index:
+                output = hh_vars.getHHkinematics_w(bjets, wjets, lep, puppimet, other_jets, output, self.debug)
 
         
         # Fill the branches
@@ -89,32 +92,43 @@ class HHjjlnu_kin(Module):
         """return True (go to next module) or False (fail, go to next event)"""
         return True
 
+
     def get_jets_vectors(self, ptmin):
-        
-        jets = []
-        coll_ids = []
-        for ijnf in range(len(self.rawJet_coll)):
-            jetindex = self.rawJet_coll[ijnf].jetIdx
-            # index in the original Jet collection
-            rawjetid = self.Jet_coll[jetindex].jetIdx
-            pt, eta, phi, mass = self.Jet_coll[jetindex].pt, \
-                        self.Jet_coll[jetindex].eta,\
-                        self.Jet_coll[jetindex].phi, \
-                        self.rawJet_coll[rawjetid].mass
+            '''
+            Returns a list of 4-momenta for jets looking only at jets
+            that are cleaned from FatJets.
+            A list of indexes in the collection of CleanJet is returned as a reference. 
 
-            if pt < ptmin or pt<0: 
-                break
-            if abs(eta) > 10 : continue
-            p = pt * cosh(eta)
-            en = sqrt(p**2 + mass**2)
-            vec = TLorentzVector()
-            vec.SetPtEtaPhiE(pt, eta, phi, en)
-            # check if different from the previous one
-            if self.debug:
-                print "Jet index: ", jetindex, "> pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
+            Inserted here an eta interval cut to avoid using the jets in a specified region for 
+            tagging. 
+            '''
+            jets = []
+            coll_ids = []
+            b_scores = []
+            for jetindex in range(len(self.Jet_coll)):
+                # index in the original Jet collection
+                rawjetid = self.Jet_coll[jetindex].jetIdx
+                pt, eta, phi, mass, bvalue = self.Jet_coll[jetindex].pt, \
+                            self.Jet_coll[jetindex].eta,\
+                            self.Jet_coll[jetindex].phi, \
+                            self.rawJet_coll[rawjetid].mass, \
+                            self.rawJet_coll[rawjetid].btagDeepB
 
-            jets.append(vec)
-            coll_ids.append(jetindex)
-        return jets, coll_ids
+                if pt < ptmin or pt<0:
+                    break
+
+
+                if abs(eta) < 10 :
+                    p = pt * cosh(eta)
+                    en = sqrt(p**2 + mass**2)
+                    vec = TLorentzVector()
+                    vec.SetPtEtaPhiE(pt, eta, phi, en)
+                    # check if different from the previous one
+                    if self.debug:
+                        print "Jet index: ", jetindex, "> pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
+                    jets.append(vec)
+                    coll_ids.append(jetindex)
+                    
+            return jets, coll_ids
 
 

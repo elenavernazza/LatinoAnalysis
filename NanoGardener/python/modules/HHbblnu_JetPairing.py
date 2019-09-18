@@ -12,7 +12,7 @@ nearest_massWZ.__name__ = "nearest_massWZ"
 # The dictionary define the name of the tagging strategy and functions to 
 # use. The order of the list defines the order of the tagging of VBS and V jets
 pairing_strategies = {
-    "nearest_massW"      : ["W", nearest_massWZ],
+    "nearest_massWZ"      : ["W", nearest_massWZ],
     "max_pt_pair"        : ["W", max_pt_pair],
     "min_deltaeta_pair"  : ["W", min_deltaeta_pair],
 
@@ -27,7 +27,7 @@ bTaggingWPs = {
 }
 
 
-class HH_JetPairing(Module):
+class HHbblnu_JetPairing(Module):
 
     def __init__(self, minpt=20, mode="ALL", bWP="M", debug = False):
         '''
@@ -77,11 +77,13 @@ class HH_JetPairing(Module):
         bjets = [(i, bscore) for i, bscore in enumerate(b_scores)
                     if bscore >= bTaggingWPs['deepCSV'][self.bWP]]
 
+        if self.debug: print("Bjets", bjets)
+
         good_jets_b_ord = list(sorted(bjets, key=itemgetter(1), reverse=True))
 
         if self.debug:  print "btag jets: ", good_jets_b_ord
 
-        hpair = [-1,-1]
+        hpair = []
 
         if len(bjets) == 0: 
             # Cut the event
@@ -89,37 +91,34 @@ class HH_JetPairing(Module):
   
         elif len(bjets) == 1 :
             # IN good jets index
-            hpair[0] = good_jets_b_ord[0][0]
+            hpair = [good_jets_b_ord[0][0]]
             
         elif len(bjets) >= 2:
-            hpair[0] = good_jets_b_ord[0][0]
-            hpair[1] = good_jets_b_ord[1][0]
+            hpair=  [ good_jets_b_ord[0][0], good_jets_b_ord[1][0]]
+
+        if self.debug: print "hpair", hpair
 
         # get the remaiming jets with index in good_jets collection
         remain_jets = [(i,j) for i,j in enumerate(good_jets) if i not in hpair]
         
         if len(remain_jets) >= 2: 
             if self.mode=="ALL":
-                for key in pairing_strategies:
-                    tag, algo = pairing_strategies[key]
-                    if self.debug: print "Association: ", tag, algo.__name__,
-                    W_jets = [remain_jets[k][0] for k in algo([rj[1] for rj in remain_jets])]
-
-                    # Go back to CleanJet index
-                    W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
-                    self.out.fillBranch("{}_jets_{}".format(tag,key), W_cleanjets)
+                selected_strategies = pairing_strategies.keys()
             else:
                 if self.mode in pairing_strategies:
-                    tag, algo = pairing_strategies[self.mode]
-                    if self.debug: print "Association: ", tag, algo.__name__,
-                    W_jets = [remain_jets[k][0] for k in algo([rj[1] for rj in remain_jets])]
-                    # Go back to CleanJet index
-                    W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
-                    self.out.fillBranch("{}_jets_{}".format(tag,self.mode), W_cleanjets)
+                    selected_strategies = [self.mode]
                 else:
                     print("ERROR! Selected pairing mode not found!!")
                     return False
-            
+                
+            for key in selected_strategies:
+                tag, algo = pairing_strategies[key]
+                if self.debug: print "Association: ", tag, algo.__name__
+
+                W_jets = [remain_jets[k][0] for k in algo([rj[1] for rj in remain_jets])]
+                # Go back to CleanJet index
+                W_cleanjets = [good_jets_ids[ij] for ij in W_jets]
+                self.out.fillBranch("{}_jets_{}".format(tag,key), W_cleanjets)
             
         else:
             # Not enought jets left for pairing
@@ -127,6 +126,7 @@ class HH_JetPairing(Module):
 
         # Now going back to CleanJet indexes 
         H_cleanjets = [good_jets_ids[ij] for ij in hpair]
+        if len(H_cleanjets) == 1: H_cleanjets.append(-1)
         self.out.fillBranch("H_jets", H_cleanjets)
         
                 
