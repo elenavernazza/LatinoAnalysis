@@ -20,7 +20,6 @@ hh_branches = {
                 "deltaeta_met_wjet_high", "deltaeta_met_wjet_low",
                 "deltaR_lep_b", "deltaR_lep_wjet",                
                 "deltaR_b", "deltaR_wjet",
-                "Rwjets_high", "Rwjets_low",
                 "A_b", "A_wjet",  "Ht"]
             }
 

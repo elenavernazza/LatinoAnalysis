@@ -2091,18 +2091,21 @@ Steps = {
       'module'     : 'hh_vars()'
   },
 
-  'HHjjlnuSkim2017v1' : {
+  'HHbblnuSkim2017v1' : {
       'isChain'    : True ,
       'do4MC'      : True  ,
       'do4Data'    : True  ,
-      'selection'  : '"nLepton>=1  && Lepton_pt[0]>30 \
+      'selection'  : '"nLepton>=1  \
+                      && (  (abs(Lepton_pdgId[0])==11 && Lepton_pt[0]>36) \
+                          || (abs(Lepton_pdgId[0])==13 && Lepton_pt[0]>28)  )\
                           && (  Lepton_isTightElectron_mvaFall17V1Iso_WP90[0] > 0.5 \
                              || Lepton_isTightMuon_cut_Tight_HWWW[0] > 0.5 ) \
                         && Alt$(Lepton_pt[1],0)<=10 && Alt$(Lepton_isLoose[1],1)>0.5 \
                     && ( Alt$(Lepton_isTightElectron_mvaFall17V1Iso_WP90[1], 0) < 0.5 \
                          || Alt$(Lepton_isTightMuon_cut_Tight_HWWW[1],0) < 0.5 )       \
                         "',
-      'subTargets': ['HHbblnu_pairing', "HHbblnu_kin"]     
+      'subTargets': ['HHbblnu_pairing', "HHbblnu_kin"] ,
+      'onlySample': LNuJJ_VBS_Samples_bkg + LNuJJ_VBS_Samples_data2017 + ['GluGluToHHTo2B2WToLNu2J']
   },
 
 # ------------------------------------ SPECIAL STEPS: HADD & UEPS -------------------------------------------------
