@@ -1110,6 +1110,7 @@ Productions= {
                                        ],
                        },
 
+
   'Apr2017_Run2016B_RemAOD_KNU' : {
                         'isData'  : True ,
                         'samples' : 'LatinoTrees/AnalysisStep/test/crab/samples/samples_data_2016_Re-miniAOD.py' ,
@@ -1356,11 +1357,22 @@ Productions= {
                         # 37.X fb-1
                         'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full',
                         'onlySamples': [
-                             'DYJetsToLL_M-10to50-LO','ST_s-channel','ST_t-channel_antitop',
-                             'ST_t-channel_top','ST_tW_antitop_noHad_ext1','ST_tW_antitop_noHad',
-                             'ST_tW_antitop','ST_tW_top_noHad_ext1','ST_tW_top_noHad','ST_tW_top',
-                             'ttHToNonbb_M125','TTTo2L2Nu','TTToSemiLepton','TTWJetsToLNu_ext2','TTWJetsToLNu',
-                             'TTWJetsToQQ','Wg_AMCNLOFXFX','Wg_MADGRAPHMLM','WgStarLNuEE','WgStarLNuMuMu',
+                             'DYJetsToLL_M-10to50',
+                             'QCD_Pt-15to20_MuEnrichedPt5',
+                             'QCD_Pt-20to30_EMEnriched',
+                             'QCD_Pt-20toInf_MuEnrichedPt15',
+                             'QCD_Pt-30to50_EMEnriched',
+                             'QCD_Pt-30toInf_DoubleEMEnriched',
+                             'QCD_Pt-50to80_EMEnriched',
+                             'QCD_Pt_170to250_bcToE',
+                             'QCD_Pt_20to30_bcToE',
+                             'QCD_Pt_250toInf_bcToE',
+                             'QCD_Pt_30to80_bcToE',
+                             'QCD_Pt_80to170_bcToE',
+                             'ST_s-channel','ST_t-channel_antitop', 'ST_t-channel_top','ST_tW_antitop','ST_tW_top',
+                             'ttHToNonbb_M125',
+                             'TTTo2L2Nu','TTToSemiLepton','TTWJetsToLNu_ext2','TTWJetsToLNu', 'TTWJetsToQQ',
+                             'Wg_AMCNLOFXFX','Wg_MADGRAPHMLM','WgStarLNuEE','WgStarLNuMuMu',
                              'WJetsToLNu_HT100_200_ext1','WJetsToLNu_HT100_200_ext2','WJetsToLNu_HT100_200',
                              'WJetsToLNu_HT1200_2500_ext1','WJetsToLNu_HT200_400_ext1','WJetsToLNu_HT200_400_ext2',
                              'WJetsToLNu_HT200_400','WJetsToLNu_HT2500_inf_ext1','WJetsToLNu_HT2500_inf',
@@ -1369,7 +1381,8 @@ Productions= {
                              'WLLJJToLNu_M-4To50_QCD_0Jet','WLLJJToLNu_M-4To50_QCD_1Jet','WLLJJToLNu_M-4To50_QCD_2Jet',
                              'WLLJJToLNu_M-4To50_QCD_3Jet','WLLJJToLNu_M-4To50_QCD_4Jet','WLLJJToLNu_M-4To60_EWK_4F',
                              'WLLJJToLNu_M-50_QCD_0Jet','WLLJJToLNu_M-50_QCD_1Jet','WLLJJToLNu_M-50_QCD_2Jet',
-                             'WLLJJToLNu_M-50_QCD_3Jet','WLLJJToLNu_M-60_EWK_4F','WWTo2L2Nu_aTGC_0-400','WWTo2L2Nu_aTGC_400-600',
+                             'WLLJJToLNu_M-50_QCD_3Jet','WLLJJToLNu_M-60_EWK_4F',
+                             'WWTo2L2Nu_aTGC_0-400','WWTo2L2Nu_aTGC_400-600',
                              'WWTo2L2Nu_aTGC_600-800','WWTo2L2Nu_aTGC_800-Inf','WWTo2L2Nu','WWW','WWZ','WZJJ_EWK_QCD',
                              'WZTo1L1Nu2Q','WZTo1L3Nu','WZTo2L2Q','ZZTo2L2Q','ZZZ'
                         ]
@@ -1385,6 +1398,17 @@ Productions= {
                           'dir':      "/group/OneLepton/VBS_semileptonic_signal_summer16/",
                           'dirExt'  : 'LatinoTrees' ,
                           'cmssw'   : 'Full2016' ,
+                        # 37.X fb-1
+                          'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
+                       },
+
+  ### QCD WW semileptonic Run2_2016
+  'QCD_semileptonic_summer16' : {
+                          'isData' : False,
+                          'samples': 'LatinoTrees/AnalysisStep/test/crab/samples/samples_VBS_QCD_semileptonic_2016.py',
+                          'dir'    : '/group/OneLepton/QCD_semileptonic_summer16/',
+                          'dirExt' : 'LatinoTrees' ,
+                          'cmssw'  : 'Full2016' ,
                         # 37.X fb-1
                           'puData'  : '/gwteras/cms/store/group/OneLepton/puData_Full'
                        },
@@ -3272,6 +3296,14 @@ Steps= {
                   'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC.py'
                },
 
+  'formulasMCVBSjjlnu' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False ,
+                  'command'    : 'gardener.py genericFormulaAdder -f data/formulasToAdd_MC_VBSjjlnu.py'
+               },
+
+
   'FformulasMC' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
@@ -3451,6 +3483,17 @@ Steps= {
                                                        std_vector_electron_isTightLepton_cut_WP_Tight80X[0]>0.5)\' '
                 },
 
+
+  'l1tight_l2veto' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : True  ,
+                  'command'    : 'gardener.py filter -f \'( std_vector_lepton_pt[0] > 18.0 && \
+                                                    (std_vector_muon_isTightLepton_cut_Tight80x[0]>0.5 || \
+                                                     std_vector_electron_isTightLepton_cut_WP_Tight80X[0]>0.5) \
+                                                     ) && (  std_vector_muon_isTightLepton_cut_Tight80x[1]<0.5 &&  \
+                                                    std_vector_electron_isTightLepton_cut_WP_Tight80X[1]<0.5 ) \' '
+		},
 
   'do_WgStarsel' : {
                   'isChain'    : False ,
@@ -5233,49 +5276,78 @@ Steps= {
                   'subTargets' : ["l1looseSimple", 'l1tight']
    },
 
-  'resolvedVBSPairingAndVars' :{
+  'VjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['Vjetpair', 'VBSjjlnu_kin']
   },
 
-  'resolvedVBSPairingGenAndVars' :{
+  'VBSjetpairAndVars' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingGenVBS','JetPairingVBS', 'VBSjjlnu_kin']
+                  'subTargets' : ['VBSjetpair', 'VBSjjlnu_kin']
+  },
+
+  ## VBSjjlnu: old, do not use this. CR redefinedd with btagLoose
+  'topCRVBSjetpairAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['btagTight', 'VBSjetpair', 'VBSjjlnu_kin']
+  },
+
+  'VBSPairGenAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['JetPairingGenVBS','VBSjetpair', 'VBSjjlnu_kin']
   },
 
   'JetPairingGenVBS' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : False,
-                  'command'    : 'gardener.py JetPairingGenVBS --radius 0.8 --ptminjet 20.0'
+                  'command'    : 'gardener.py JetPairingGenVBS --radius 0.8 --ptminjet 0.0'
   },
 
 
 
-  'JetPairingVBS' :{
+  'Vjetpair' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0'
+                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0 --mode 0'
   },
 
-  'HHPairingGenAndVars' :{
+  'VBSjetpair' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py JetPairingVBS --ptminjet 20.0 --mode 1'
+  },
+
+  'HHPairingGen' :{
                   'isChain'    : True ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
-                  'subTargets' : ['gr4JetsSkim', 'JetPairingGenHH','JetPairingHH']
+                  'subTargets' : [ 'JetPairingGenHH','JetPairingHH']
   },
 
+
+  'HHPairingAndVars' :{
+                  'isChain'    : True ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'subTargets' : ['JetPairingHH','HHjjlnu_kin']
+  },
 
   'JetPairingGenHH' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : False,
-                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 20.0 --bWP M -m 0'
+                  'command'    : 'gardener.py JetPairingGenHH --radius 0.8 --ptminjet 0.0 '
   },
 
 
@@ -5293,11 +5365,71 @@ Steps= {
                   'command'    : 'gardener.py VBSjjlnu_kin --ptminjet 20.0'
   },
 
+   'HHjjlnu_kin' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py HHjjlv_kin --ptminjet 20.0'
+  },
+
+   'HH_MVAvar' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command'    : 'gardener.py HH_MvaVarFiller'
+  },
+
   'gr4JetsSkim' :{
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True,
                   'command'    : 'gardener.py filter -f \'std_vector_jet_pt[3]>=20 \' '
+  },
+  
+
+  'l1tight_l2veto_btag_4jets' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command' : 'gardener.py filter -f \'    \
+                    ( (1*(std_vector_jet_DeepCSVB[0] > 0.8958)*(std_vector_jet_pt[0]>25) + \
+                      1*(std_vector_jet_DeepCSVB[1] > 0.8958)*(std_vector_jet_pt[1]>25) + \
+                      1*(std_vector_jet_DeepCSVB[2] > 0.8958)*(std_vector_jet_pt[2]>25) + \
+                      1*(std_vector_jet_DeepCSVB[3] > 0.8958)*(std_vector_jet_pt[3]>25) + \
+                      1*(std_vector_jet_DeepCSVB[4] > 0.8958)*(std_vector_jet_pt[4]>25) + \
+                      1*(std_vector_jet_DeepCSVB[5] > 0.8958)*(std_vector_jet_pt[5]>25) + \
+                      1*(std_vector_jet_DeepCSVB[6] > 0.8958)*(std_vector_jet_pt[6]>25) + \
+                      1*(std_vector_jet_DeepCSVB[7] > 0.8958)*(std_vector_jet_pt[7]>25) + \
+                      1*(std_vector_jet_DeepCSVB[8] > 0.8958)*(std_vector_jet_pt[8]>25) + \
+                      1*(std_vector_jet_DeepCSVB[9] > 0.8958)*(std_vector_jet_pt[9]>25) \
+                      ) >= 1 )  && \
+                    (std_vector_jet_pt[3]>=20) && \
+                    (std_vector_lepton_pt[0] > 18.0 && \
+                      (std_vector_muon_isTightLepton_cut_Tight80x[0]>0.5 || std_vector_electron_isTightLepton_cut_WP_Tight80X[0]>0.5)) \
+                && (  std_vector_muon_isTightLepton_cut_Tight80x[1]<0.5 && std_vector_electron_isTightLepton_cut_WP_Tight80X[1]<0.5 ) \' '
+  },
+
+
+  'l1tight_l2veto_bveto_4jets' :{
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True,
+                  'command' : 'gardener.py filter -f \'    \
+                    ( (1*(std_vector_jet_DeepCSVB[0] > 0.2219)*(std_vector_jet_pt[0]>25) + \
+                      1*(std_vector_jet_DeepCSVB[1] > 0.2219)*(std_vector_jet_pt[1]>25) + \
+                      1*(std_vector_jet_DeepCSVB[2] > 0.2219)*(std_vector_jet_pt[2]>25) + \
+                      1*(std_vector_jet_DeepCSVB[3] > 0.2219)*(std_vector_jet_pt[3]>25) + \
+                      1*(std_vector_jet_DeepCSVB[4] > 0.2219)*(std_vector_jet_pt[4]>25) + \
+                      1*(std_vector_jet_DeepCSVB[5] > 0.2219)*(std_vector_jet_pt[5]>25) + \
+                      1*(std_vector_jet_DeepCSVB[6] > 0.2219)*(std_vector_jet_pt[6]>25) + \
+                      1*(std_vector_jet_DeepCSVB[7] > 0.2219)*(std_vector_jet_pt[7]>25) + \
+                      1*(std_vector_jet_DeepCSVB[8] > 0.2219)*(std_vector_jet_pt[8]>25) + \
+                      1*(std_vector_jet_DeepCSVB[9] > 0.2219)*(std_vector_jet_pt[9]>25) \
+                      ) == 0  )  && \
+                    (std_vector_jet_pt[3]>=20) && \
+                    (std_vector_lepton_pt[0] > 18.0 && \
+                      (std_vector_muon_isTightLepton_cut_Tight80x[0]>0.5 || std_vector_electron_isTightLepton_cut_WP_Tight80X[0]>0.5)) \
+                && (  std_vector_muon_isTightLepton_cut_Tight80x[1]<0.5 && std_vector_electron_isTightLepton_cut_WP_Tight80X[1]<0.5 ) \' '
   },
 
 # WP taken from https://github.com/latinos/LatinoAnalysis/blob/master/Gardener/python/variables/allBtagPogScaleFactors.py#L358
@@ -5386,5 +5518,21 @@ Steps= {
                                                               ) == 0 \' '
                   },
 
+  ## VBSjjlnu control regions
+  'wjetsCR' : {
+                'isChain'    : False ,
+                'do4MC'      : True ,
+                'do4Data'    : True,
+                'command'    : 'gardener.py filter -f \' (mjj_vjet > 40 && mjj_vjet < 65) || (mjj_vjet > 105 && mjj_vjet < 150) \' '
+  },
+
+  'topCR' : {
+                'isChain'   : True,
+                'do4MC'     : True,
+                'do4Data'   : True,
+                # 'subTargets': ['btagLoose', 'LepTrgFix','dorochester','formulasMC','gr4JetsSkim','VBSjetpairAndVars']
+                # 'subTargets': ['btagLoose', 'LepTrgFix',                           'dorochester',                                                                                                  'formulasMC', 'gr4JetsSkim', 'VBSjetpairAndVars']
+                'subTargets':   ['btagLoose', 'etaptlepsf' , 'TrigMakerMCkeepRun',   'dorochesterMC','dorochesterData','TrigMakerMCkeepRun','IdIsoSC_Multi','l2kin','l3kin','l4kin','do_dymvaHiggs', 'formulasMC', 'gr4JetsSkim', 'VBSjetpair', 'VBSjjlnu_kin']
+  }
 
 }

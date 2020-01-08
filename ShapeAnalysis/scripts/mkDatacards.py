@@ -195,9 +195,9 @@ class DatacardFactory:
                          'shapes/histos_' + tagNameToAppearInDatacard + ".root" +
                          '     histo_$PROCESS histo_$PROCESS_$SYSTEMATIC' + '\n')
             
-              card.write('shapes  data_obs           * '+
-                         'shapes/histos_' + tagNameToAppearInDatacard + ".root" +
-                         '     histo_Data' + '\n')
+#              card.write('shapes  data_obs           * '+
+#                         'shapes/histos_' + tagNameToAppearInDatacard + ".root" +
+#                         '     histo_Data' + '\n')
             
               #   shapes  *           * shapes/hww-19.36fb.mH125.of_vh2j_shape_mll.root     histo_$PROCESS histo_$PROCESS_$SYSTEMATIC
               #   shapes  data_obs    * shapes/hww-19.36fb.mH125.of_vh2j_shape_mll.root     histo_Data

@@ -935,8 +935,8 @@ samples['WmToLNu_WmTo2J']   .extend( ['xsec=0.0326',    'kfact=1.000',   'ref=Z'
 samples['WpToLNu_ZTo2J']    .extend( ['xsec=0.1825',    'kfact=1.000',   'ref=Z' ])
 samples['WpTo2J_ZTo2L']     .extend( ['xsec=0.0540',    'kfact=1.000',   'ref=Z' ])
 samples['WmToLNu_ZTo2J']    .extend( ['xsec=0.1000',    'kfact=1.000',   'ref=Z' ])
-samples['WmTo2J_ZTo2L']     .extend(['xsec=0.0298',     'kfact=1.000',   'ref=Z' ])
-samples['ZTo2L_ZTo2J']      .extend(['xsec=0.0159',     'kfact=1.000',   'ref=Z' ])
+samples['WmTo2J_ZTo2L']     .extend( ['xsec=0.0298',     'kfact=1.000',   'ref=Z' ])
+samples['ZTo2L_ZTo2J']      .extend( ['xsec=0.0159',     'kfact=1.000',   'ref=Z' ])
 
 
 # HH_WWbb_bblnujj semileptonic 2016
@@ -950,6 +950,18 @@ samples['T2tt__mStop-350to400']     .extend(['xsec=1.',     'kfact=1.000',   're
 samples['T2tt__mStop-400to1200']    .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
 samples['T2tt__mStop-1200to2000']   .extend(['xsec=1.',     'kfact=1.000',   'ref=X' ])
 
+
+# QCD WW
+
+samples['WpToLNu_WmTo2J_QCD'].extend(['xsec=5.544',  'kfact=1.0', 'ref=X'])
+samples['WpTo2J_WmToLNu_QCD'].extend(['xsec=5.561',  'kfact=1.0', 'ref=X'])
+samples['WpToLNu_WpTo2J_QCD'].extend(['xsec=0.08642','kfact=1.0', 'ref=X'])
+samples['WmToLNu_WmTo2J_QCD'].extend(['xsec=0.03774','kfact=1.0', 'ref=X'])
+samples['WpToLNu_ZTo2J_QCD'] .extend(['xsec=2.162',  'kfact=1.0', 'ref=X'])
+samples['WpTo2J_ZTo2L_QCD']    .extend(['xsec=0.6409', 'kfact=1.0', 'ref=X'])
+samples['WmToLNu_ZTo2J_QCD'] .extend(['xsec=1.302',  'kfact=1.0', 'ref=X'])
+samples['WmTo2J_ZTo2L_QCD']  .extend(['xsec=0.3862', 'kfact=1.0', 'ref=X'])
+samples['ZTo2L_ZTo2J_QCD']        .extend(['xsec=0.3756', 'kfact=1.0', 'ref=X'])
 
 #PrivateNanoSamples
 samples['GluGluHToWWTo2L2Nu_M125_PrivateNano']      .extend( ['xsec=1.0315',    'kfact=1.000',          'ref=Y'] ) # 45.20*0.215*0.1086*0.1086*9
@@ -966,3 +978,4 @@ samples['HWminusJ_HToTauTau_M125_PrivateNano']  .extend( ['xsec=0.0341',        
 samples['HWplusJ_HToTauTau_M125_PrivateNano']   .extend( ['xsec=0.0532',        'kfact=1.000',          'ref=EF'] ) # 0.842*0.0632
 samples['HZJ_HToWW_M125_PrivateNano']           .extend( ['xsec=0.187',         'kfact=1.000',          'ref=EF'] ) # 0.8696*0.215
 samples['bbHToWWTo2L2Nu_M125_ybyt_PrivateNano']     .extend( ['xsec=0.000743225',    'kfact=1.000',         'ref=N'] ) # 0.000743225 = -0.03293*0.215*0.108*0.108*9
+
