@@ -21,6 +21,9 @@ vbsjjlnu_samples_bkg = ['WmTo2J_ZTo2L_QCD','WmToLNu_WmTo2J_QCD','WmToLNu_ZTo2J_Q
                 'DYJetsToLL_M-50_HT-800to1200',
                 'DYJetsToLL_M-50_HT-1200to2500',
                 'DYJetsToLL_M-50_HT-2500toInf',
+                'DYJetsToLL_0J',
+                'DYJetsToLL_1J',
+                'DYJetsToLL_2J',
                 'ST_t-channel_top', 'ST_t-channel_antitop',
                 'ST_tW_antitop','ST_tW_top','ST_tW_antitop_ext1','ST_tW_top_ext1',
                 'ST_s-channel','ST_s-channel_ext1',
@@ -41,7 +44,10 @@ vbsjjlnu_samples_bkg = ['WmTo2J_ZTo2L_QCD','WmToLNu_WmTo2J_QCD','WmToLNu_ZTo2J_Q
                 'WJetsToLNu_Pt100to250',
                 'WJetsToLNu_Pt250to400',
                 'WJetsToLNu_Pt400to600',
-                'WJetsToLNu_Pt600toInf'
+                'WJetsToLNu_Pt600toInf',
+                'WJetsToLNu_0J',
+                'WJetsToLNu_1J',
+                'WJetsToLNu_2J',
                 
                 # 'QCD_Pt-15to20_MuEnrichedPt5','QCD_Pt-20to30_MuEnrichedPt5','QCD_Pt-30to50_MuEnrichedPt5',
                 # 'QCD_Pt-50to80_MuEnrichedPt5','QCD_Pt-80to120_MuEnrichedPt5','QCD_Pt-120to170_MuEnrichedPt5',

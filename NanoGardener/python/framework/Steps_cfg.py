@@ -239,6 +239,7 @@ Steps = {
                      'isChain'    : True  ,
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
+                     'selection': vbsjjlnu_preselection_mc_2016,
                      'subTargets' : ['baseW','PrefCorr2016','btagPerJet2016',
                                      'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
                                      'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK','HiggsGenVars',
@@ -363,6 +364,7 @@ Steps = {
                      'isChain'    : True  ,
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
+                     'selection': vbsjjlnu_preselection_mc_2017,
                      'subTargets' : ['baseW','PrefCorr2017','btagPerJet2017',
                                      'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
                                      'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK','HiggsGenVars',  
@@ -440,6 +442,7 @@ Steps = {
                      'isChain'    : True  ,
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
+                     'selection': vbsjjlnu_preselection_mc_2016,
                      'subTargets' : ['baseW','btagPerJet2018',
                                      'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
                                      'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK', 'wNLOEWK',
@@ -1136,6 +1139,7 @@ Steps = {
                                   'WJetsToLNu_HT200_400','WJetsToLNu_HT400_600',
                                   'WJetsToLNu_HT600_800','WJetsToLNu_HT800_1200',
                                   'WJetsToLNu_HT1200_2500','WJetsToLNu_HT2500_inf',
+                                  'WJetsToLNu_0J','WJetsToLNu_1J','WJetsToLNu_2J',
                                   ]
                   } ,
 
@@ -1173,6 +1177,9 @@ Steps = {
                                   'DYJetsToLL_M-50_HT-800to1200',
                                   'DYJetsToLL_M-50_HT-1200to2500',
                                   'DYJetsToLL_M-50_HT-2500toInf',
+                                  'DYJetsToLL_0J',
+                                  'DYJetsToLL_1J',
+                                  'DYJetsToLL_2J',
                                   ]
                   } ,
 
@@ -1819,15 +1826,6 @@ Steps = {
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.LeptonFakeWMaker',
                   'declare'    : '',
                   'module'     : 'LeptonFakeWMaker("RPLME_CMSSW")',
-              },
-
-  'fakeWstep1l'   : {
-                  'isChain'    : False ,
-                  'do4MC'      : True ,
-                  'do4Data'    : True ,
-                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LeptonFakeWMaker',
-                  'declare'    : '',
-                  'module'     : 'LeptonFakeWMaker("RPLME_CMSSW", min_nlep=1)',
               },
 
 ## ------- MODULES: Rochester corrections
@@ -3325,7 +3323,7 @@ Steps = {
       'do4MC'      : True  ,
       'do4Data'    : True  ,
       'import'     : 'LatinoAnalysis.NanoGardener.modules.VBSjjlnu_kin',
-      'declare'    : 'vbs_vars_maker = lambda : VBSjjlnu_kin(mode=["maxmjj","maxmjj_massWZ"], mjj_vbs_cut=250, deltaeta_vbs_cut=2, met="PuppiMET", debug=False)',
+      'declare'    : 'vbs_vars_maker = lambda : VBSjjlnu_kin(mode=["maxmjj","maxmjj_massWZ"], mjj_vbs_cut=500, deltaeta_vbs_cut=2.5, met="PuppiMET", debug=False)',
       'module'     : 'vbs_vars_maker()'
   },
 
@@ -3456,7 +3454,9 @@ Steps = {
       'do4MC'      : True  ,
       'do4Data'    : True  ,
       'selection'  : vbsjjlnu_preselection_mc_2016,
-      'subTargets': ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+      'subTargets': ['baseW','PrefCorr2016','btagPerJet2016',
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                    'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
                     'trigMC', 'CorrFatJetMC', 'CleanFatJet', 
                     'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
       'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
@@ -3476,7 +3476,9 @@ Steps = {
       'do4MC'      : True  ,
       'do4Data'    : True  ,
       'selection'  : vbsjjlnu_preselection_mc_2017,
-      'subTargets': ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+      'subTargets': ['baseW','PrefCorr2017','btagPerJet2017',
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                   'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
                     'trigMC', 'CorrFatJetMC', 'CleanFatJet', 
                     'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
       'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
@@ -3496,7 +3498,9 @@ Steps = {
       'do4MC'      : True  ,
       'do4Data'    : True  ,
       'selection'  : vbsjjlnu_preselection_mc_2018,
-      'subTargets': ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+      'subTargets': ['baseW','btagPerJet2018',
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                    'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
                     'trigMC', 'CorrFatJetMC', 'CleanFatJet', 
                     'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
       'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
