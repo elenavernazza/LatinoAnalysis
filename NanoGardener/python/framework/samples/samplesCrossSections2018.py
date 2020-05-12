@@ -54,11 +54,6 @@ samples['WJetsToLNu_HT1200_2500_ext1']    .extend( ['xsec=1.074',	'kfact=1.21',	
 samples['WJetsToLNu_HT2500_inf']       	.extend( ['xsec=0.008001',	'kfact=1.21',		'ref=W'] )
 samples['WJetsToLNu_HT2500_inf_ext1']     .extend( ['xsec=0.008001',	'kfact=1.21',		'ref=W'] )
 
-samples['WJetsToLNu-0J'] .extend( ['xsec=54611.6',      'kfact=1.00',           'ref=I'] )
-samples['WJetsToLNu-1J'] .extend( ['xsec=8966.2',       'kfact=1.00',           'ref=I'] )
-samples['WJetsToLNu-2J'] .extend( ['xsec= 3643.12',     'kfact=1.00',           'ref=I'] )
-
-
 samples['WJetsToLNu_Pt50to100']                	.extend( ['xsec=3298.37',	'kfact=1.0',		'ref=A1'] )  #Already included NNLO k-factor
 samples['WJetsToLNu_Pt100to250']                	.extend( ['xsec=689.749632',	'kfact=1.0',		'ref=A1'] )  
 samples['WJetsToLNu_Pt250to400']                	.extend( ['xsec=24.5069015',	'kfact=1.0',		'ref=A1'] )
