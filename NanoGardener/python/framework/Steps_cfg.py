@@ -101,26 +101,44 @@ def addJESchainMembers():
   return dictionary 
 
 
-def prepare_VBSjjlnu_syst(basename, selection):
+def prepare_VBSjjlnu_syst(basename, selection, year):
   dictionary = {}
-  for syst in ["JES", "MupT", "ElepT", "MET"]:
+  for syst in ["JES", "MET"]:
     for j in ['up', 'do']:
       dictionary[basename+"_"+ syst + j] = {
       'isChain'    : True ,
       'do4MC'      : True  ,
       'do4Data'    : False  ,
       'selection'  : selection,
-      'subTargets': ['do_{0}{1}'.format(syst, j),
+      'subTargets': ['baseW','btagPerJet'+str(year),
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                    'do_{0}{1}'.format(syst, j),
                     'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
-                    'trigMC', 'CorrFatJetMC', 'CleanFatJet', 
+                    'trigMCKeepRun', 'CorrFatJetMC', 'CleanFatJet', 
                     'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
       'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
       }
       if syst == "JES":
         dictionary[basename+"_"+ syst + j]["subTargets"] = ['JESBaseTotal'] + dictionary[basename+"_"+ syst + j]["subTargets"] 
+
+  for syst in [ "MupT", "ElepT"]:
+    for j in ['up', 'do']:
+      dictionary[basename+"_"+ syst + j] = {
+      'isChain'    : True ,
+      'do4MC'      : True  ,
+      'do4Data'    : False  ,
+      'selection'  : selection,
+      'subTargets': ['baseW','btagPerJet'+str(year),
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                    'do_{0}{1}'.format(syst, j),
+                    'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+                    'trigMCKeepRun', 'LeptonSF', 'CorrFatJetMC', 'CleanFatJet', 
+                    'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
+      'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
+      }
   return dictionary
 
-def prepare_VBSjjlnu_Fatjet_syst(basename, selection):
+def prepare_VBSjjlnu_Fatjet_syst(basename, selection,year):
   dictionary = {}
   for syst in ['JES', 'JMS']:
     for j in ['up', 'do']:
@@ -129,8 +147,10 @@ def prepare_VBSjjlnu_Fatjet_syst(basename, selection):
       'do4MC'      : True  ,
       'do4Data'    : False  ,
       'selection'  : selection,
-      'subTargets': ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
-                    'trigMC', 'CorrFatJetMC', 
+      'subTargets': ['baseW','btagPerJet'+str(year),
+                    'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
+                    'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+                    'trigMCKeepRun', 'CorrFatJetMC', 
                     'CleanFatJet_{0}{1}'.format(syst, j), 
                     'VBSjjlnu_pairing', 'VBSjjlnu_kin'],
       'onlySample' : vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal
@@ -3582,10 +3602,10 @@ Steps = {
 Steps.update(addJESchainMembers())
 
 ## ADD systematics for VBSjjlnu analysis
-Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2016v5",vbsjjlnu_preselection_mc_2016))
-Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2017v5", vbsjjlnu_preselection_mc_2017))
-Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2018v5", vbsjjlnu_preselection_mc_2018))
+Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2016v5",vbsjjlnu_preselection_mc_2016, 2016))
+Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2017v5", vbsjjlnu_preselection_mc_2017, 2017))
+Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2018v5", vbsjjlnu_preselection_mc_2018, 2018))
 ## ADD fatjet systematic for VBSjjlnu analysis
-Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2016v5_fatjet", vbsjjlnu_preselection_mc_2016))
-Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2017v5_fatjet", vbsjjlnu_preselection_mc_2017))
-Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2018v5_fatjet", vbsjjlnu_preselection_mc_2018))
+Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2016v5_fatjet", vbsjjlnu_preselection_mc_2016, 2016))
+Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2017v5_fatjet", vbsjjlnu_preselection_mc_2017, 2017))
+Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2018v5_fatjet", vbsjjlnu_preselection_mc_2018, 2018))
