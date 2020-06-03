@@ -462,7 +462,7 @@ Steps = {
                      'isChain'    : True  ,
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
-                     'selection': vbsjjlnu_preselection_mc_2016,
+                     'selection': vbsjjlnu_preselection_mc_2018,
                      'subTargets' : ['baseW','btagPerJet2018',
                                      'rochesterMC','trigMC','trigMC_Cut','LeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMC','EmbeddingVeto',
                                      'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK', 'wNLOEWK',
