@@ -62,8 +62,8 @@ vbsjjlnu_samples_bkg += [
     'DYJetsToLL_M-5to50_HT-200to400_ext1',
     'DYJetsToLL_M-5to50_HT-400to600',
     'DYJetsToLL_M-5to50_HT-400to600_ext1',
-    'DYJetsToLL_M-5to50_HT-600toinf_ext1',
-    'DYJetsToLL_M-5to50_HT-600toinf',
+    'DYJetsToLL_M-5to50_HT-600toInf_ext1',
+    'DYJetsToLL_M-5to50_HT-600toInf',
     'DYJetsToLL_M-10to50', 'DYJetsToLL_M-10to50_ext1',
     'DYJetsToLL_M-50',
     'DYJetsToLL_M-50_HT-70to100',
@@ -76,7 +76,7 @@ vbsjjlnu_samples_bkg += [
     'DYJetsToLL_M-50_HT-600to800',
     'DYJetsToLL_M-50_HT-800to1200',
     'DYJetsToLL_M-50_HT-1200to2500',
-    'DYJetsToLL_M-50_HT-2500toinf',
+    'DYJetsToLL_M-50_HT-2500toInf',
     'TTWJetsToLNu_ext2',
 
     'WJetsToLNu', 'WJetsToLNu_ext2', 'WJetsToLNu-LO_ext2',
@@ -98,8 +98,8 @@ vbsjjlnu_samples_signal = [ 'WmTo2J_ZTo2L','WmToLNu_WmTo2J','WmToLNu_ZTo2J','WpT
 vbsjjlnu_samples_qcdvv = ['WmTo2J_ZTo2L_QCD','WmToLNu_WmTo2J_QCD','WmToLNu_ZTo2J_QCD','WpTo2J_WmToLNu_QCD','WpTo2J_ZTo2L_QCD',
                 'WpToLNu_WpTo2J_QCD','WpToLNu_ZTo2J_QCD','ZTo2L_ZTo2J_QCD','WpToLNu_WmTo2J_QCD']
 
-#vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal + vbsjjlnu_samples_qcdvv
-vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg 
+vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal + vbsjjlnu_samples_qcdvv
+#vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg 
 
 vbsjjlnu_samples_data2016 = ['SingleElectron_Run2016B-02Apr2020_ver2-v1',
                              'SingleElectron_Run2016C-02Apr2020-v1',
