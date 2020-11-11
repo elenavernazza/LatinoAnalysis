@@ -86,7 +86,7 @@ vbsjjlnu_samples_bkg += [
 #     'WJetsToLNu_Pt100To250_ext4', 'WJetsToLNu_Pt250To400_ext4', 'WJetsToLNu_Pt400To600_ext4', 'WJetsToLNu_Pt600ToInf_ext4',
 #     'WJetsToLNu_Wpt100t0200_ext1','WJetsToLNu_Wpt200toInf_ext1',                    
    
-    'DYJetsToLL_M-50_ext2', 'TTWJetsToLNu', 'TTToSemiLeptonic_ext3', 
+    'DYJetsToLL_M-50_ext2', 'TTWJetsToLNu', 'TTToSemiLeptonic', 'TTToSemiLeptonic_ext3', 
      'Zg', 'ZGToLLG', 'Wg_AMCNLOFXFX','WZTo3LNu_mllmin01','Wg_MADGRAPHMLM']
 
 
@@ -96,7 +96,7 @@ vbsjjlnu_samples_signal = [ 'WmTo2J_ZTo2L','WmToLNu_WmTo2J','WmToLNu_ZTo2J','WpT
                     'WpToLNu_WpTo2J_aQGC', 'WpToLNu_ZTo2J_aQGC','ZTo2L_ZTo2J_aQGC','WpToLNu_WmTo2J_aQGC']
 
 vbsjjlnu_samples_qcdvv = ['WmTo2J_ZTo2L_QCD','WmToLNu_WmTo2J_QCD','WmToLNu_ZTo2J_QCD','WpTo2J_WmToLNu_QCD','WpTo2J_ZTo2L_QCD',
-                'WpToLNu_WpTo2J_QCD','WpToLNu_ZTo2J_QCD','ZTo2L_ZTo2J_QCD','WpToLNu_WmTo2J_QCD']
+                          'WpToLNu_WpTo2J_QCD','WpToLNu_ZTo2J_QCD','ZTo2L_ZTo2J_QCD','WpToLNu_WmTo2J_QCD']
 
 vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg + vbsjjlnu_samples_signal + vbsjjlnu_samples_qcdvv
 #vbsjjlnu_samples_mc = vbsjjlnu_samples_bkg 
