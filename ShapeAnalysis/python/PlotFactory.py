@@ -481,9 +481,19 @@ class PlotFactory:
               for sampleNameGroup, sampleConfiguration in groupPlot.iteritems():
                 if sampleName in sampleConfiguration['samples']:
                   if sampleNameGroup in histos_grouped.keys() :
-                    histos_grouped[sampleNameGroup].Add(histos[sampleName])
+                    if 'scale' not in sampleConfiguration.keys() :
+                      histos_grouped[sampleNameGroup].Add(histos[sampleName])
+                    else :
+                      histo_scaled = histos[sampleName].Clone(sampleName + '_scaled')
+                      histo_scaled.Scale(sampleConfiguration['scale'][sampleName])
+                      histos_grouped[sampleNameGroup].Add(histo_scaled)
                   else :
-                    histos_grouped[sampleNameGroup] = histos[sampleName].Clone('new_histo_group_' + sampleNameGroup + '_' + cutName + '_' + variableName)
+                    if 'scale' not in sampleConfiguration.keys() :
+                      histos_grouped[sampleNameGroup] = histos[sampleName].Clone('new_histo_group_' + sampleNameGroup + '_' + cutName + '_' + variableName)
+                    else :
+                      histo_scaled = histos[sampleName].Clone(sampleName + '_scaled')
+                      histo_scaled.Scale(sampleConfiguration['scale'][sampleName])
+                      histos_grouped[sampleNameGroup] = histo_scaled.Clone('new_histo_group_' + sampleNameGroup + '_' + cutName + '_' + variableName)
 
             # end sample loop
 
